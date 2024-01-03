@@ -1,54 +1,15 @@
 // backend/routes/api/spots.js
 const express = require('express');
 const { Spot, Review, SpotImage, User} = require('../../db/models');
-const { requireAuth } = require('../../utils/auth.js') 
+const { requireAuth } = require('../../utils/auth.js');
+const { ifSpotExists, validateCreateSpot, checkAuthorization} = require('../../utils/validation.js');
+
 const { Op } = require('sequelize');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const router = express.Router();
 
-const validateCreateSpot = [
-    check('address')
-      .exists({ checkFalsy: true })
-      .isLength({min: 1, max: 50})
-      .withMessage('Street address is required within 50 characters.'),
-    check('city')
-      .exists({ checkFalsy: true })
-      .isLength({min: 1, max: 20})
-      .withMessage('City is required within 20 characters.'),
-    check('state')
-      .exists({ checkFalsy: true })
-      .isLength({min: 1, max: 20})
-      .withMessage('State is required within 20 characters.'),
-    check('country')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .isLength({min:1, max: 50})
-      .withMessage('Country is required within 20 characters.'),
-    check('lat')
-      .exists({ checkFalsy: true })
-      .isFloat({ min: -90, max: 90 })
-      .withMessage('Latitude must be within -90 and 90.'),
-     check('lng')
-      .exists({ checkFalsy: true })
-      .isFloat({ min: -180, max: 180 })
-      .withMessage('Longitude must be within -180 and 180.'),
-    check('name')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .isLength({min: 1, max: 50})
-      .withMessage('Name is required and must be less than 50 characters.'),
-      check('description')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .withMessage('Description is required.'),
-    check('price')
-      .exists({ checkFalsy: true })
-      .notEmpty()
-      .isFloat({ min: 0})
-      .withMessage('Price per day must be a positive number.'),
-    handleValidationErrors
-]
+
+const router = express.Router();
 
 const getSpot = async (spot) => {
     spot = spot.toJSON();
@@ -84,24 +45,6 @@ const getSpot = async (spot) => {
     else spot.previewImage = "PreviewImage is not available now.";
 
     return spot
-}
-
-const ifSpotExists = (spot, res) => {
-    if (!spot) {
-        res.status(404)
-        return res.json({
-            message: "Spot couldn't be found"
-        })
-    }
-}
-
-const validateAuthorization = (spot, userId, res) => {
-    if(spot.toJSON().ownerId != userId) {
-        res.status(403);
-        return res.json({
-            message: "Forbidden"
-        })
-    }
 }
 
 // Get all Spots
@@ -142,9 +85,8 @@ router.get('/current', async(req, res) => {
     res.json({Spots});
 }) 
 
-
 // Get details of a Spot from an id
-router.get("/:spotId", async(req, res) => {
+router.get("/:spotId", ifSpotExists, async(req, res) => {
     const spotId = req.params.spotId;
 
     let spot = await Spot.findByPk(spotId, {
@@ -152,15 +94,7 @@ router.get("/:spotId", async(req, res) => {
             model: SpotImage,
             attributes: ['id', 'url', 'preview']
         }
-        
     });
-
-    if (!spot) {
-            res.status(404);
-            return res.json({
-                message: "Spot couldn't be found"
-            })
-    }
 
     spot = spot.toJSON();
 
@@ -193,7 +127,6 @@ router.get("/:spotId", async(req, res) => {
     res.json(spot);
 })
 
-
 // Create a Spot 
 router.post("/", [requireAuth, validateCreateSpot], async (req, res) => { 
     const {address, city, state, country, lat, lng, name, description, price} = req.body;
@@ -209,23 +142,18 @@ router.post("/", [requireAuth, validateCreateSpot], async (req, res) => {
         description, 
         price
       });
-
+      res.status(201);
       res.json(newSpot);
 })
 
 // Add an Image to a Spot based on the Spot's id // authorization?? order?
-router.post("/:spotId/images", requireAuth, async (req, res) => { 
+router.post("/:spotId/images", [requireAuth, ifSpotExists, checkAuthorization], async (req, res) => { 
     const userId = req.user.id;
     const spotId = req.params.spotId;
-    const spot = await Spot.findByPk(spotId);
-
-    // check if spot exists? 
-    ifSpotExists(spot, res);
-
-    // check authorization
-    validateAuthorization(spot, userId, res);
+    let spot = await Spot.findByPk(spotId);
 
     // add image
+    spot = spot.toJSON();
     const {url, preview} = req.body;
     const newSpotImage = await SpotImage.create({
         spotId: spot.id,
@@ -240,22 +168,13 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
     })
 })
 
-
 // Edit a Spot
-router.put('/:spotId', [requireAuth, validateCreateSpot], async (req, res) => {
+router.put('/:spotId', [requireAuth, ifSpotExists, checkAuthorization, validateCreateSpot], async (req, res) => {
     const userId = req.user.id;
     const spotId = req.params.spotId;
     let spot = await Spot.findByPk(spotId);
-
-    // check if spot exists? 
-    ifSpotExists(spot, res);
-
-    // check authorization
-    validateAuthorization(spot, userId, res);
-
-    // edit spot
-    spot = spot.toJSON();
     const {address, city, state, country, lat, lng, name, description, price} = req.body;
+
     if (address) spot.address = address;
     if (city) spot.city = city;
     if (state) spot.state = state;
@@ -266,25 +185,22 @@ router.put('/:spotId', [requireAuth, validateCreateSpot], async (req, res) => {
     if (description) spot.description = description;
     if (price) spot.price = price;
 
+    await spot.save();
     res.json(spot);
 })
 
 // Delete a Spot
-router.delete('/:spotId', requireAuth, async (req, res) => {
+router.delete('/:spotId', [requireAuth, ifSpotExists, checkAuthorization], async (req, res) => {
     const userId = req.user.id;
     const spotId = req.params.spotId;
     let spot = await Spot.findByPk(spotId);
-
-    // check if spot exists? 
-    ifSpotExists(spot, res);
-
-    // check authorization
-    validateAuthorization(spot, userId, res);
 
     await spot.destroy();
     res.json({
         message: "Successfully deleted"
     })
 })
+
+
 
 module.exports = router;
