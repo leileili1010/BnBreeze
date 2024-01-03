@@ -1,8 +1,8 @@
 // backend/routes/api/spots.js
 const express = require('express');
-const { Spot, Review, SpotImage, User} = require('../../db/models');
+const { Spot, Review, SpotImage, User, ReviewImage} = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
-const { ifSpotExists, validateCreateSpot, checkAuthorization} = require('../../utils/validation.js');
+const { ifSpotExists, validateCreateSpot, checkAuthorization, validateCreateReview } = require('../../utils/validation.js');
 
 const router = express.Router();
 
@@ -37,7 +37,7 @@ const getSpot = async (spot) => {
     })
 
     if (image) spot.previewImage = image.url;
-    else spot.previewImage = "PreviewImage is not available now.";
+    else spot.previewImage = "PreviewImage not found.";
 
     return spot
 }
@@ -141,7 +141,7 @@ router.post("/", [requireAuth, validateCreateSpot], async (req, res) => {
       res.json(newSpot);
 })
 
-// Add an Image to a Spot based on the Spot's id // authorization?? order?
+// Add an Image to a Spot based on the Spot's id
 router.post("/:spotId/images", [requireAuth, ifSpotExists, checkAuthorization], async (req, res) => { 
     const userId = req.user.id;
     const spotId = req.params.spotId;
@@ -196,6 +196,55 @@ router.delete('/:spotId', [requireAuth, ifSpotExists, checkAuthorization], async
     })
 })
 
+// Get all Reviews by a Spot's id
+router.get('/:spotId/reviews', [requireAuth, ifSpotExists], async(req, res) => {
+    const Reviews = await Review.findAll({
+        where: {
+            spotId: req.params.spotId
+        },
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+                model: ReviewImage,
+                attributes: ['id', 'url']
+            }
+        ]
+    })
+    res.json({Reviews});
+})
+
+// Create a Review for a Spot based on the Spot's id
+router.post('/:spotId/reviews', [requireAuth, ifSpotExists, validateCreateReview], async(req, res) => {
+   // check if user alreay left a review for the spot 
+    const oldReviews = await Review.findAll({
+        where:{
+            spotId: req.params.spotId
+        }
+    }) 
+    
+    oldReviews.forEach(oldReview => {
+        if (oldReview.userId === req.user.id) {
+            res.status(500);
+            return res.json({
+                message: "User already has a review for this spot"
+            })
+        }
+    })
+
+    // create review
+    const {review, stars} = req.body;
+    const newReview = await Review.create({
+        spotId: req.params.spotId,
+        userId: req.user.id,
+        review,
+        stars
+    })
+    res.status(201);
+    res.json(newReview);
+})
 
 
 module.exports = router;
