@@ -4,11 +4,6 @@ const { Spot, Review, SpotImage, User} = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
 const { ifSpotExists, validateCreateSpot, checkAuthorization} = require('../../utils/validation.js');
 
-const { Op } = require('sequelize');
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
-
-
 const router = express.Router();
 
 const getSpot = async (spot) => {
