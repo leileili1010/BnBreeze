@@ -34,7 +34,7 @@ module.exports = {
         allowNull: false,
       },
       country: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.STRING(50),
         allowNull: false,
       },
       lat: {
@@ -45,8 +45,7 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING(50),
-        allowNull: false,
-        unique: true
+        allowNull: false
       },
       description: {
         type: Sequelize.STRING,

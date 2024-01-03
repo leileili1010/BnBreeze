@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Spot.belongsTo(models.User, {
-        foreignKey: 'ownerId'
+        foreignKey: 'ownerId',
        })
 
       Spot.hasMany(models.SpotImage, {
@@ -47,15 +47,26 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }, 
     country: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING(50),
       allowNull: false
     }, 
-    lat: DataTypes.DECIMAL,
-    lng: DataTypes.DECIMAL,
+    lat: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        min: -90,
+        max: 90
+      }
+    }, 
+    lng: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        min: -180,
+        max: 180
+      }
+    },
     name: {
       type: DataTypes.STRING(50),
-      allowNull: false,
-      unique: true
+      allowNull: false
     }, 
     description: {
       type: DataTypes.STRING,
@@ -63,7 +74,11 @@ module.exports = (sequelize, DataTypes) => {
     }, 
     price: {
       type: DataTypes.DECIMAL,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        min: 0
+      }
+
     }
   }, {
     sequelize,
