@@ -1,8 +1,8 @@
 // backend/routes/api/spots.js
 const express = require('express');
-const { Spot, Review, SpotImage, User, ReviewImage} = require('../../db/models');
+const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
-const { ifSpotExists, validateCreateSpot, checkAuthorization, validateCreateReview } = require('../../utils/validation.js');
+const { ifSpotExists, validateCreateSpot, checkAuthorization, validateCreateReview, validateCreateBooking, checkConflictBooking } = require('../../utils/validation.js');
 
 const router = express.Router();
 
@@ -244,6 +244,57 @@ router.post('/:spotId/reviews', [requireAuth, ifSpotExists, validateCreateReview
     })
     res.status(201);
     res.json(newReview);
+})
+
+// Get all Bookings for a Spot based on the Spot's id
+router.get('/:spotId/bookings', [requireAuth, ifSpotExists], async (req, res) => {
+    // is owner?
+    const spot = await Spot.findByPk(req.params.spotId);
+    let Bookings;
+
+    if(spot.toJSON().ownerId != req.user.id) {
+        // isOwener = "no";
+        Bookings = await Booking.findAll({
+            where: {
+                spotId: req.params.spotId
+            },
+            attributes: ['spotId', 'startDate', 'endDate']
+        })
+    } else {
+        // isOwener = "yes";
+        Bookings = await Booking.findAll({
+            include: {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            where: {
+                spotId: req.params.spotId 
+            }
+        })
+    }
+
+    res.json({Bookings})
+})
+
+// Create a Booking from a Spot based on the Spot's id
+router.post('/:spotId/bookings', [requireAuth, ifSpotExists, validateCreateBooking, checkConflictBooking], async (req, res) => {
+    // check not owner
+    const spot = await Spot.findByPk(req.params.spotId);
+    if (spot.toJSON().ownerId === req.user.id) {
+       res.status(403);
+       return res.json({
+          message: "Spot must not belong by the current user"
+      })
+    }
+
+   const {startDate, endDate} = req.body;
+   const newBooking = await Booking.create({
+        spotId: req.params.spotId,
+        userId: req.user.id,
+        startDate,
+        endDate
+    })
+    res.json(newBooking)
 })
 
 
