@@ -1,7 +1,7 @@
 // backend/utils/validation.js
 const { validationResult } = require('express-validator');
 const { check } = require('express-validator');
-const { Spot, Review, SpotImage, User, Booking} = require("../db/models");
+const { Spot, Review, SpotImage, User, Booking, ReviewImage} = require("../db/models");
 const { Op } = require("sequelize");
 
 // middleware for formatting errors from express-validator middleware
@@ -293,9 +293,52 @@ const ifBookingStarted = async (req, res, next) => {
   next();
 }
 
+const spotImageExists = async (req, res, next) => {
+  const spotImage = await SpotImage.findByPk(req.params.imageId);
+  if(!spotImage) {
+    res.status(404);
+    return res.json({
+              message: "Spot Image couldn't be found"
+          })
+   }
+   next()
+}
 
+const authDeleteSpotImage = async (req, res, next) => {
+  const spotImage = await SpotImage.findByPk(req.params.imageId);
+  const spot = await Spot.findByPk(spotImage.toJSON().spotId);
+  if (spot.toJSON().ownerId != req.user.id) {
+    res.status(403);
+    return res.json({
+      message: "Forbidden"
+    })
+  }
+  next()
+}
 
+const reviewImageExists = async (req, res, next) => {
+  const reviewImage = await ReviewImage.findByPk(req.params.imageId);
+  if(!reviewImage) {
+    res.status(404);
+    return res.json({
+              message: "Review Image couldn't be found"
+          })
+   }
+   next()
+}
+
+const authDeleteReviewImage = async (req, res, next) => {
+  const reviewImage = await ReviewImage.findByPk(req.params.imageId);
+  const review = await Review.findByPk(reviewImage.toJSON().reviewId);
+  if (review.toJSON().userId != req.user.id) {
+    res.status(403);
+    return res.json({
+      message: "Forbidden"
+    })
+  }
+   next()
+}
 
 module.exports = {
-  ifSpotExists, handleValidationErrors, validateCreateSpot, checkAuthorization, validateCreateReview, ifReviewExists, authEditReview, validateCreateBooking, checkConflictBooking, ifBookingExists, ifPastBooking, authEditBooking, checkConflictBookingEdit, ifBookingStarted
+  ifSpotExists, handleValidationErrors, validateCreateSpot, checkAuthorization, validateCreateReview, ifReviewExists, authEditReview, validateCreateBooking, checkConflictBooking, ifBookingExists, ifPastBooking, authEditBooking, checkConflictBookingEdit, ifBookingStarted, spotImageExists, authDeleteSpotImage, reviewImageExists, authDeleteReviewImage
 };
