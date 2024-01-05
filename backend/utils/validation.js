@@ -53,7 +53,6 @@ const validateQuery = [
   handleValidationErrors
 ]
 
-
 const validateCreateSpot = [
   check('address')
     .exists({ checkFalsy: true })
@@ -369,6 +368,25 @@ const authDeleteReviewImage = async (req, res, next) => {
    next()
 }
 
+const ifOldReview = async (req, res, next) => {
+  // check if user alreay left a review for the spot 
+  const oldReviews = await Review.findAll({
+    where:{
+        spotId: req.params.spotId
+    }
+}) 
+
+  oldReviews.forEach(oldReview => {
+      if (oldReview.userId === req.user.id) {
+          res.status(500);
+          return res.json({
+              message: "User already has a review for this spot"
+          })
+      }
+  })
+  next();
+}
+
 const checkUserExistence = async (req, res, next) => {
   const {email, username} = req.body;
   const users = await User.findAll({
@@ -403,5 +421,5 @@ const checkUserExistence = async (req, res, next) => {
 }
 
 module.exports = {
-  checkUserExistence, ifSpotExists, handleValidationErrors, validateCreateSpot, checkAuthorization, validateCreateReview, ifReviewExists, authEditReview, validateCreateBooking, checkConflictBooking, ifBookingExists, ifPastBooking, authEditBooking, checkConflictBookingEdit, ifBookingStarted, spotImageExists, authDeleteSpotImage, reviewImageExists, authDeleteReviewImage, validateQuery
+  checkUserExistence, ifSpotExists, handleValidationErrors, validateCreateSpot, checkAuthorization, validateCreateReview, ifReviewExists, authEditReview, validateCreateBooking, checkConflictBooking, ifBookingExists, ifPastBooking, authEditBooking, checkConflictBookingEdit, ifBookingStarted, spotImageExists, authDeleteSpotImage, reviewImageExists, authDeleteReviewImage, validateQuery,ifOldReview 
 };
