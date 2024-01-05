@@ -385,7 +385,7 @@ const checkUserExistence = async (req, res, next) => {
     }
 
     if (email == user.email && username == user.username) {
-      errors.email = "Userwith that email already exists";
+      errors.email = "User with that email already exists";
       errors.username = "User with that username already exists";
       break;
     }
