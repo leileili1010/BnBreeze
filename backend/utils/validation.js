@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator');
 const { check } = require('express-validator');
 const { Spot, Review, SpotImage, User, Booking, ReviewImage} = require("../db/models");
 const { Op } = require("sequelize");
+const user = require('../db/models/user');
 
 // middleware for formatting errors from express-validator middleware
 // (to customize, see express-validator's documentation)
@@ -368,6 +369,39 @@ const authDeleteReviewImage = async (req, res, next) => {
    next()
 }
 
+const checkUserExistence = async (req, res, next) => {
+  const {email, username} = req.body;
+  const users = await User.findAll({
+    attributes: ['username', 'email']
+  })
+
+  const errors = {}
+  for (let user of users) {
+    if (email == user.email) {
+      errors.email = "Userwith that email already exists"
+    }
+    if (username == user.username) {
+      errors.username = "User with that username already exists"
+    }
+
+    if (email == user.email && username == user.username) {
+      errors.email = "Userwith that email already exists";
+      errors.username = "User with that username already exists";
+      break;
+    }
+  }
+
+  if(Object.keys(errors).length > 0) {
+    res.status (500);
+    return res.json({
+      message: "User alreay exists",
+      errors
+    })
+  }
+
+  next();
+}
+
 module.exports = {
-  ifSpotExists, handleValidationErrors, validateCreateSpot, checkAuthorization, validateCreateReview, ifReviewExists, authEditReview, validateCreateBooking, checkConflictBooking, ifBookingExists, ifPastBooking, authEditBooking, checkConflictBookingEdit, ifBookingStarted, spotImageExists, authDeleteSpotImage, reviewImageExists, authDeleteReviewImage, validateQuery
+  checkUserExistence, ifSpotExists, handleValidationErrors, validateCreateSpot, checkAuthorization, validateCreateReview, ifReviewExists, authEditReview, validateCreateBooking, checkConflictBooking, ifBookingExists, ifPastBooking, authEditBooking, checkConflictBookingEdit, ifBookingStarted, spotImageExists, authDeleteSpotImage, reviewImageExists, authDeleteReviewImage, validateQuery
 };
