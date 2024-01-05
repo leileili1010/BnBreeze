@@ -2,9 +2,10 @@
 const express = require('express');
 const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
-const { ifSpotExists, validateCreateSpot, checkAuthorization, validateCreateReview, validateCreateBooking, checkConflictBooking } = require('../../utils/validation.js');
-
+const { ifSpotExists, validateCreateSpot, checkAuthorization, validateCreateReview, validateCreateBooking, checkConflictBooking, validateQuery} = require('../../utils/validation.js');
+const {Op} = require('sequelize');
 const router = express.Router();
+
 
 const getSpot = async (spot) => {
     spot = spot.toJSON();
@@ -43,8 +44,61 @@ const getSpot = async (spot) => {
 }
 
 // Get all Spots
-router.get('/', async (req, res) => {
-    const spots = await Spot.findAll();
+router.get('/', validateQuery, async (req, res) => {
+    let {page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query;
+    const pagination = {};
+    const queryObj = {
+        where: {}
+    };
+
+    // pagination
+    page = page || 1;
+    size = size || 20;
+    pagination.limit = size;
+    pagination.offset = size * (page - 1);
+
+    // query
+    if(minLat) {
+        queryObj.where.lat = {
+            [Op.gte] : minLat
+        }
+    }
+
+    if(maxLat) {
+        queryObj.where.lat = {
+            [Op.lte]: maxLat
+        }
+    }
+
+    if(minLng) {
+        queryObj.where.lng = {
+            [Op.gte] : minLng
+        }
+    }
+
+    if(maxLng) {
+        queryObj.where.lng = {
+            [Op.lte]: maxLng
+        }
+    }
+
+    if(minPrice) {
+        queryObj.where.price = {
+            [Op.gte] : minPrice
+        }
+    }
+
+    if(maxPrice) {
+        queryObj.where.price = {
+            [Op.lte]: maxPrice
+        }
+    }
+
+    // get all spots
+    const spots = await Spot.findAll({
+        ...pagination,
+        ...queryObj
+    });
     const Spots = [];
 
     for (let spot of spots) {
@@ -52,7 +106,11 @@ router.get('/', async (req, res) => {
         Spots.push(spot);
     }
 
-    return res.json({Spots});
+    return res.json({
+        Spots,
+        page,
+        size
+    });
 })
 
 // Get all Spots owned by the Current User
