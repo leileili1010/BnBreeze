@@ -50,7 +50,7 @@ router.get('/current', requireAuth, async(req, res) => {
 })
 
 // Add an Image to a Review based on the Review's id
-router.post('/:reviewId/images', [requireAuth, ifReviewExists], async(req, res) => {
+router.post('/:reviewId/images', [requireAuth, ifReviewExists, authEditReview], async(req, res) => {
     // check max 10 reviewImages
     const reviewImages = await ReviewImage.findAll({
         where: {

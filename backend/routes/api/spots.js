@@ -114,7 +114,7 @@ router.get('/', validateQuery, async (req, res) => {
 })
 
 // Get all Spots owned by the Current User
-router.get('/current', async(req, res) => {
+router.get('/current', requireAuth, async(req, res) => {
     const id = req.user.id;
     const Spots = [];
 
@@ -341,7 +341,7 @@ router.post('/:spotId/bookings', [requireAuth, ifSpotExists, validateCreateBooki
     if (spot.toJSON().ownerId === req.user.id) {
        res.status(403);
        return res.json({
-          message: "Spot must not belong by the current user"
+          message: "Spot must not belong to the current user"
       })
     }
 
