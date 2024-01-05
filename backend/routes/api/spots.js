@@ -2,7 +2,7 @@
 const express = require('express');
 const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
-const { ifSpotExists, validateCreateSpot, checkAuthorization, validateCreateReview, validateCreateBooking, checkConflictBooking, validateQuery} = require('../../utils/validation.js');
+const { ifSpotExists, validateCreateSpot, checkAuthorization, validateCreateReview, validateCreateBooking, checkConflictBooking, validateQuery, ifOldReview } = require('../../utils/validation.js');
 const {Op} = require('sequelize');
 const router = express.Router();
 
@@ -275,24 +275,7 @@ router.get('/:spotId/reviews', [requireAuth, ifSpotExists], async(req, res) => {
 })
 
 // Create a Review for a Spot based on the Spot's id
-router.post('/:spotId/reviews', [requireAuth, ifSpotExists, validateCreateReview], async(req, res) => {
-   // check if user alreay left a review for the spot 
-    const oldReviews = await Review.findAll({
-        where:{
-            spotId: req.params.spotId
-        }
-    }) 
-    
-    oldReviews.forEach(oldReview => {
-        if (oldReview.userId === req.user.id) {
-            res.status(500);
-            return res.json({
-                message: "User already has a review for this spot"
-            })
-        }
-    })
-
-    // create review
+router.post('/:spotId/reviews', [requireAuth, ifSpotExists, ifOldReview, validateCreateReview], async(req, res) => {
     const {review, stars} = req.body;
     const newReview = await Review.create({
         spotId: req.params.spotId,
