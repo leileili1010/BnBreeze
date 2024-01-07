@@ -14,6 +14,9 @@ router.get('/current', requireAuth, async(req, res) => {
         where: {
             userId: userId
         },
+        attributes: {
+            exclude: ['description']
+        },
         include: [
             {
                 model: User,

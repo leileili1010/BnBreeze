@@ -166,8 +166,10 @@ router.get("/:spotId", ifSpotExists, async(req, res) => {
         });
         const avgStarRating = Math.round(totalStars/numSpot*10)/10;
         spot.avgStarRating = avgStarRating;
+        spot.numReviews = numSpot;
     } else {
         spot.avgStarRating = "No ratings yet.";
+        spot.numReviews = "No reviews yet.";
     }
 
     // owner
