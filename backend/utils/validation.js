@@ -371,19 +371,19 @@ const authDeleteReviewImage = async (req, res, next) => {
 const ifOldReview = async (req, res, next) => {
   // check if user alreay left a review for the spot 
   const oldReviews = await Review.findAll({
-    where:{
-        spotId: req.params.spotId
+    where: {
+      spotId: req.params.spotId
     }
-}) 
-
-  oldReviews.forEach(oldReview => {
-      if (oldReview.userId === req.user.id) {
-          res.status(500);
-          return res.json({
-              message: "User already has a review for this spot"
-          })
-      }
   })
+
+  for (let oldReview of oldReviews) {
+    if (oldReview.userId === req.user.id) {
+      res.status(500);
+      return res.json({
+        message: "User already has a review for this spot"
+      })
+    }
+  }
   next();
 }
 
