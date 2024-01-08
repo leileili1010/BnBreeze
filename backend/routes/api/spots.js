@@ -209,7 +209,7 @@ router.post("/:spotId/images", [requireAuth, ifSpotExists, checkAuthorization], 
     spot = spot.toJSON();
     const {url, preview} = req.body;
     const newSpotImage = await SpotImage.create({
-        spotId: spot.id,
+         spotId: spot.id,
         url,
         preview
     })
@@ -244,7 +244,6 @@ router.put('/:spotId', [requireAuth, ifSpotExists, checkAuthorization, validateC
 
 // Delete a Spot
 router.delete('/:spotId', [requireAuth, ifSpotExists, checkAuthorization], async (req, res) => {
-    const userId = req.user.id;
     const spotId = req.params.spotId;
     let spot = await Spot.findByPk(spotId);
 
