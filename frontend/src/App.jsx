@@ -5,6 +5,8 @@ import LoginFormPage from './components/LoginFormPage';
 import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation/Navigation-bonus';
 import * as sessionActions from './store/session';
+import ListOfSpots from './components/Spots/ListOfSpots';
+import SpotDetails from './components/Spots/SpotDetails';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -30,7 +32,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <h1>Welcome!</h1>
+        element: <ListOfSpots />
+      },
+      {
+        path: '/spots/:spotId',
+        element: <SpotDetails />
       },
       {
         path: 'login',
