@@ -28,7 +28,6 @@ const addImage = (spotId, image) => ({
     spotId, image
 })
 
-
 // thunk action creator
 // get all spots
 export const thunkGetSpots = () => async dispatch => {
@@ -72,12 +71,12 @@ export const thunkCreateImage = (spotId, image) => async dispatch => {
         return createdImg;
     } else {
         const data = await res.json();
-        // console.log("this is err", data); // to be delete!!!
+        console.log("this is err for adding image", data); // to be delete!!!
         return data;
     }
 }
 
-// create a spot with images
+// create a spot
 export const thunkCreateSpot = (spot) => async dispatch => {
     const res = await csrfFetch(`/api/spots`, {
         method: "POST",
@@ -86,6 +85,7 @@ export const thunkCreateSpot = (spot) => async dispatch => {
     });
     if (res.ok) {
         const createdSpot = await res.json();
+        dispatch(addSpot(createdSpot))
         return createdSpot;
     } 
     else {
@@ -115,19 +115,28 @@ const spotReducer = (state = initialState, action) => {
             return { ...state, [action.spot.id]: {...state[action.spot.id], ...action.spot}};
          }
          case ADD_IMG: {
-            if (!state[action.spotId].SpotImages) {
-                const newState = {...state, [state[action.spotId]]: { ...state[action.spotId], SpotImages: 
-                        {[action.image.id]: action.image}
-                    }
-                }
-                return newState
+            const newState = {...state}
+            if (!newState[action.spotId].SpotImages) {
+                newState[action.spotId].SpotImages = [];
+                newState[action.spotId].SpotImages.push(action.image);
+                return newState;
+            } else {
+                newState[action.spotId].SpotImages.push(action.image);
+                return newState;
             }
-            return {...state, [state[action.spotId]]: {...state[action.spotId],
-                   [state[action.spotId].SpotImages]: {...state[action.spotId].SpotImages, 
-                        [action.image.id]: action.image
-                   }
-                }
-            }
+            // if (!state[action.spotId].SpotImages.length) {
+            //     const newState = {...state, [state[action.spotId]]: { ...state[action.spotId], SpotImages: 
+            //             {[action.image.id]: action.image}
+            //         }
+            //     }
+            //     return newState
+            // }
+            // return {...state, [state[action.spotId]]: {...state[action.spotId],
+            //        [state[action.spotId].SpotImages]: {...state[action.spotId].SpotImages, 
+            //             [action.image.id]: action.image
+            //        }
+            //     }
+            // }
         }
         default:
             return state   
