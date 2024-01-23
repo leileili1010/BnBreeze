@@ -12,6 +12,8 @@ const ListOfSpots = () => {
         dispatch(thunkGetSpots());
     }, [dispatch])
 
+    if (!spotsArr) return null;
+
     return (
         <div className='spots-container' >
             {spotsArr.map(spot => (
@@ -23,9 +25,9 @@ const ListOfSpots = () => {
                         <div className='address'>{`${spot.city}, ${spot.state}`}</div>
                         <div className='rating'>
                             {
-                                spot.avgRating?
-                                (<span><i class="fa-solid fa-star"></i>{(spot.avgRating).toFixed(2)}</span>):
-                                (<span><i class="fa-solid fa-star"></i>New</span>)
+                                spot.avgRating !== "No ratings yet"?
+                                (<span><i className="fa-solid fa-star"></i>{parseFloat(spot.avgRating).toFixed(1)}</span>):
+                                (<span><i className="fa-solid fa-star"></i>New</span>)
                             }
                         </div>
                         <div className='price'>{`$${(spot.price.toFixed(2))} night`}</div>
