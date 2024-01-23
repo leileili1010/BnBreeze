@@ -30,7 +30,7 @@ const ListOfSpots = () => {
                                 (<span><i className="fa-solid fa-star"></i>New</span>)
                             }
                         </div>
-                        <div className='price'>{`$${(spot.price.toFixed(2))} night`}</div>
+                        <div className='price'>{`$${parseFloat(spot.price).toFixed(2)} night`}</div>
                     </Link>
                 </div>
             ))}

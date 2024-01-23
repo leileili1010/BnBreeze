@@ -1,3 +1,7 @@
-let arr = [];
-let arr1 = arr.slice(1,5).map(num => num + 2);
-console.log(arr1);
+let a = "hello world";
+let b = "hello you";
+let c = true;
+if (!a.endsWith("world" || "ryo")) {
+    c = "false"
+}
+console.log(c);
