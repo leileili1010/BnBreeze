@@ -5,6 +5,7 @@ const GET_SPOTS = '/spots/get_spots';
 const GET_SPOT = '/spots/get_spot';
 const ADD_SPOT = '/spots/add_spot';
 const ADD_IMG = '/spots/add_img';
+const DELETE_SPOT = '/spots/delete_spot';
 // const EDIT_IMG = '/spots/edit_img';
 
 // action creator
@@ -26,6 +27,11 @@ const addSpot = (spot) => ({
 const addImage = (spotId, image) => ({
     type: ADD_IMG,
     spotId, image
+})
+
+const deleteSpot = (spotId) => ({
+    type: DELETE_SPOT,
+    spotId
 })
 
 // const editImage = (spotId, image) => ({
@@ -82,8 +88,6 @@ export const thunkCreateImage = (spotId, image) => async dispatch => {
     }
 }
 
-//update image to a spot
-
 // create a spot
 export const thunkCreateSpot = (spot) => async dispatch => {
     const res = await csrfFetch(`/api/spots`, {
@@ -113,6 +117,20 @@ export const thunkUpdateSpot = (spot, spotId) => async dispatch => {
         const updatedSpot = await res.json();
         dispatch(addSpot(updatedSpot));
         return updatedSpot;
+    } else {
+        const data = await res.json();
+        return data;
+    }
+}
+
+// delete a spot
+export const thunkDeleteSpot = (spotId) => async dispatch => {
+    const res = await csrfFetch(`/api/spots/${spotId}`, {
+        method: "DELETE"
+    })
+    if (res.ok) {
+        dispatch(deleteSpot(spotId));
+        return spotId;
     } else {
         const data = await res.json();
         return data;
@@ -149,6 +167,11 @@ const spotReducer = (state = initialState, action) => {
                 newState[action.spotId].SpotImages.push(action.image);
                 return newState;
             }
+        }
+        case DELETE_SPOT: {
+            const newState = {...state}
+            delete newState[action.spotId]
+            return newState
         }
         // case EDIT_IMG: {
         //     const newState = {...state};

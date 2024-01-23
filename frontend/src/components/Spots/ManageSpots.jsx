@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import {thunkGetSpots} from '../../store/spots';
 import { Link, useNavigate } from 'react-router-dom';
+import OpenModalButton from '../OpenModalButton';
+import DeleteSpot from './DeleteSpot';
 
 const ManageSpots = () => {
     const dispatch = useDispatch();
@@ -11,12 +13,13 @@ const ManageSpots = () => {
     const spots = useSelector(state => state.spots);
     const currentUserSpots = [];
     Object.values(spots).forEach(spot => {if(spot.ownerId === userId) currentUserSpots.push(spot)});
+    console.log("🚀 ~ ManageSpots ~ currentUserSpots:", currentUserSpots)
 
     useEffect(() => {
         dispatch(thunkGetSpots())
     }, [dispatch])
 
-    if (!currentUserSpots) {
+    if (!currentUserSpots.length) {
         return (
             <div>
                 <h1>Manage Your Spots</h1>
@@ -45,9 +48,9 @@ const ManageSpots = () => {
                     </Link>
                     <div className='update-delete'>
                             <button onClick={() => {navigate(`/spots/${spot.id}/edit`)}}>Update</button>
-                            <button>Delete</button>
+                            <OpenModalButton buttonText="Delete" modalComponent={<DeleteSpot spot={spot}/>}/>
                     </div>
-                </div>
+                </div> 
             ))}
         </div>
                 

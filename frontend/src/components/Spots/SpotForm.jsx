@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { thunkCreateImage, thunkUpdateSpot} from '../../store/spots';
+import { thunkUpdateSpot} from '../../store/spots';
 import './CreateSpot.css';
 
 const SpotForm = ({spot}) => {
@@ -83,9 +83,6 @@ const SpotForm = ({spot}) => {
         //         preview: false
         //     } : null
         // ]
-
-       
-      
        
         const updatedSpot = await dispatch(thunkUpdateSpot(newSpot, spot.id));
         
