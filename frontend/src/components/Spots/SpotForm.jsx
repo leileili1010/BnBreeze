@@ -1,23 +1,22 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { thunkCreateSpot } from '../../store/spots';
+import { thunkCreateImage, thunkUpdateSpot} from '../../store/spots';
 import './CreateSpot.css';
-import { thunkCreateImage } from '../../store/spots';
 
-const CreateSpot = () => {
-    const [country, setCountry] = useState("");
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [description, setDescription] = useState("");
-    const [name, setName] = useState("");
-    const [price, setPrice] = useState("");
-    const [previewImage, setPreviewImage] = useState("");
-    const [image1, setImage1] = useState("");
-    const [image2, setImage2] = useState("");
-    const [image3, setImage3] = useState("");
-    const [image4, setImage4] = useState("");
+const SpotForm = ({spot}) => {
+    const [country, setCountry] = useState(spot?.country);
+    const [address, setAddress] = useState(spot?.address);
+    const [city, setCity] = useState(spot?.city);
+    const [state, setState] = useState(spot?.state);
+    const [description, setDescription] = useState(spot?.description);
+    const [name, setName] = useState(spot?.name);
+    const [price, setPrice] = useState(spot?.price);
+    const [previewImage, setPreviewImage] = useState(spot?.SpotImages[0]?.url);
+    const [image1, setImage1] = useState(spot?.SpotImages[1]?.url);
+    const [image2, setImage2] = useState(spot?.SpotImages[2]?.url);
+    const [image3, setImage3] = useState(spot?.SpotImages[3]?.url);
+    const [image4, setImage4] = useState(spot?.SpotImages[4]?.url);
     const [validationErrors, setValidationErrors] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -56,58 +55,55 @@ const CreateSpot = () => {
         }
         setValidationErrors(errors);
 
-        const newSpot = {
-            address,
-            city,
-            state,
-            country,
-            name,
-            description,
-            price
-        }
+        const newSpot = {address, city, state, country, name, description, price};
 
-        const newImages = [
-            {
-                url: previewImage,
-                preview: true
-            }, 
-            image1?
-            {
-                url: image1,
-                preview: false
-            } : null,
-            image2?
-            {
-                url: image2,
-                preview: false
-            } : null,
-            image3?
-            {
-                url: image3,
-                preview: false
-            } : null,
-            image4?
-            {
-                url: image4,
-                preview: false
-            } : null
-        ]
+        // const newImages = [
+        //     {
+        //         url: previewImage,
+        //         preview: true
+        //     }, 
+        //     image1?
+        //     {
+        //         url: image1,
+        //         preview: false
+        //     } : null,
+        //     image2?
+        //     {
+        //         url: image2,
+        //         preview: false
+        //     } : null,
+        //     image3?
+        //     {
+        //         url: image3,
+        //         preview: false
+        //     } : null,
+        //     image4?
+        //     {
+        //         url: image4,
+        //         preview: false
+        //     } : null
+        // ]
+
+       
       
-        const data = await dispatch(thunkCreateSpot(newSpot));
-        if (data?.errors) {
-            errors = {...errors, ...data.errors}
+       
+        const updatedSpot = await dispatch(thunkUpdateSpot(newSpot, spot.id));
+        
+        if(updatedSpot.errors) {
+            errors = {...errors, ...updatedSpot.errors};
             setValidationErrors(errors);
         } else {
-            for (let image of newImages) {
-                if(image) dispatch(thunkCreateImage(data.id, image));
-            }
-            navigate(`/spots/${data.id}`)
+            // for (let image of newImages) {
+            //     if(image) dispatch(thunkCreateImage(spot.id, image));
+            // }
+            navigate(`/spots/${updatedSpot.id}`)
         }
     }
 
+    if(!spot || !spot.SpotImages) return null;
+
     return (
         <div>
-            <h1>Create a New Spot</h1>
             <form action="" onSubmit={handleSubmit}>
                 <div className="location">
                     <h3>Where&apos;s your place located?</h3>
@@ -173,10 +169,10 @@ const CreateSpot = () => {
                     <input value={image4} onChange={editImage4} placeholder="Image URL" type="URL" />
                     {validationErrors.image && <p className='validationErrors'>{validationErrors.image}</p>}
                 </div>
-                <button type="submit">Create Spot</button>
+                <button type="submit">Update your Spot</button>
             </form>
         </div>
     )
 }
 
-export default CreateSpot;
+export default SpotForm;

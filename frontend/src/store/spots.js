@@ -5,6 +5,7 @@ const GET_SPOTS = '/spots/get_spots';
 const GET_SPOT = '/spots/get_spot';
 const ADD_SPOT = '/spots/add_spot';
 const ADD_IMG = '/spots/add_img';
+// const EDIT_IMG = '/spots/edit_img';
 
 // action creator
 const getSpots = (spots) => ({
@@ -22,11 +23,16 @@ const addSpot = (spot) => ({
     spot
 })
 
-
 const addImage = (spotId, image) => ({
     type: ADD_IMG,
     spotId, image
 })
+
+// const editImage = (spotId, image) => ({
+//     type: EDIT_IMG,
+//     spotId, image
+// })
+
 
 // thunk action creator
 // get all spots
@@ -76,6 +82,8 @@ export const thunkCreateImage = (spotId, image) => async dispatch => {
     }
 }
 
+//update image to a spot
+
 // create a spot
 export const thunkCreateSpot = (spot) => async dispatch => {
     const res = await csrfFetch(`/api/spots`, {
@@ -89,6 +97,23 @@ export const thunkCreateSpot = (spot) => async dispatch => {
         return createdSpot;
     } 
     else {
+        const data = await res.json();
+        return data;
+    }
+}
+
+// Update a spot
+export const thunkUpdateSpot = (spot, spotId) => async dispatch => {
+    const res = await csrfFetch(`/api/spots/${spotId}`, {
+        method: "PUT",
+        headers: { "Content-Type": 'application/json'},
+        body: JSON.stringify(spot)
+    })
+    if (res.ok) {
+        const updatedSpot = await res.json();
+        dispatch(addSpot(updatedSpot));
+        return updatedSpot;
+    } else {
         const data = await res.json();
         return data;
     }
@@ -124,6 +149,12 @@ const spotReducer = (state = initialState, action) => {
                 newState[action.spotId].SpotImages.push(action.image);
                 return newState;
             }
+        }
+        // case EDIT_IMG: {
+        //     const newState = {...state};
+        //     newState[action.spotId].SpotImages[action.image.id] = image;
+        //     return newState;
+        // }
             // if (!state[action.spotId].SpotImages.length) {
             //     const newState = {...state, [state[action.spotId]]: { ...state[action.spotId], SpotImages: 
             //             {[action.image.id]: action.image}
@@ -136,8 +167,7 @@ const spotReducer = (state = initialState, action) => {
             //             [action.image.id]: action.image
             //        }
             //     }
-            // }
-        }
+            
         default:
             return state   
     }
