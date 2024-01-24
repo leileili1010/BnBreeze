@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
 import PostReview from './PostReview';
+import DeleteReview from './DeleteReview';
 
 const SpotReviews = ({spot, reviewsArr}) => {
     const sessionUser = useSelector(state => state.session.user)
@@ -46,7 +47,12 @@ const SpotReviews = ({spot, reviewsArr}) => {
                             <div>{review.User.firstName}</div>
                             <div>{new Date(review.updatedAt).toLocaleDateString('en-US', { month: 'long' })} {new Date(review.updatedAt).getFullYear()}</div>
                             <p>{review.review}</p>
-                            <button>Delete</button>
+                            {review.userId === sessionUser?.id && 
+                                <OpenModalButton 
+                                    buttonText='Delete'
+                                    modalComponent={<DeleteReview review={review} />}
+                                />
+                            }
                         </div>
                     ))}
               
