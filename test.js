@@ -1,7 +1,2 @@
-let a = "hello world";
-let b = "hello you";
-let c = true;
-if (!a.endsWith("world" || "ryo")) {
-    c = "false"
-}
-console.log(c);
+let c = Date("2024-01-23T18:07:09.043Z")
+console.log(typeof c);

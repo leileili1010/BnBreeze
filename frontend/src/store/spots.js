@@ -138,9 +138,7 @@ export const thunkDeleteSpot = (spotId) => async dispatch => {
 }
 
 // spots reducer
-const initialState = {};
-
-const spotReducer = (state = initialState, action) => {
+const spotReducer = (state = {}, action) => {
     switch(action.type) {
         case GET_SPOTS: {
             const newState = {...state};

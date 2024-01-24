@@ -2,17 +2,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { thunkGetSpot } from '../../store/spots';
+import SpotReviews from '../Reviews/SpotReviews';
+import { thunkGetReviews } from '../../store/reviews';
 
 const SpotDetails = () => {
     const dispatch = useDispatch();
     const {spotId} = useParams();
-    
+    const spot = useSelector(state => state.spots[spotId]);
+    const reviewsArr = Object.values(useSelector(state => state.reviews));
+
     useEffect(() => {
         dispatch(thunkGetSpot(spotId));
     }, [dispatch, spotId])
 
-    const spot = useSelector(state => state.spots[spotId]);
-    console.log("🚀 ~ SpotDetails ~ spot:", spot)
+    useEffect(() => {
+        dispatch(thunkGetReviews(spotId));
+    }, [dispatch, spotId, reviewsArr.length])
 
     if (!spot || !spot.SpotImages) return null;
 
@@ -53,21 +58,11 @@ const SpotDetails = () => {
                 </div>
                 <button onClick={handleReserve}>Reserve</button>
             </div>
-
-            <div className='spot-reviews'>
-                <div className='rating-review'>
-                    {
-                        spot.avgStarRating !== "No ratings yet." ?
-                        (<span><i className="fa-solid fa-star"></i>{parseFloat(spot.avgStarRating).toFixed(1)}</span>) :
-                        (<span><i className="fa-solid fa-star"></i>New</span>)
-                    }
-                    <span>{spot.numReviews !== "No reviews yet." ? (spot.numReviews > 1 ? ` · ${spot.numReviews} Reviews` : ` · ${spot.numReviews} Review`) : null}</span>
-                </div>
-            </div>
+            
+            <SpotReviews spot={spot} reviewsArr={reviewsArr}/>
         </div>
     )
     
 }
-
 
 export default SpotDetails;

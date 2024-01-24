@@ -93,7 +93,7 @@ const CreateSpot = () => {
             } : null
         ]
       
-        const data = await dispatch(thunkCreateSpot(newSpot));
+        const data = await dispatch(thunkCreateSpot(newSpot));        
         if (data?.errors) {
             errors = {...errors, ...data.errors}
             setValidationErrors(errors);
