@@ -1,1 +1,8 @@
-/* TODO: Add sitewide styles */
+* {
+    font-family: "Neue Plak", Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+ul {
+    list-style-type: none;
+}
