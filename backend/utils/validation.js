@@ -71,12 +71,12 @@ const validateCreateSpot = [
     .notEmpty()
     .isLength({min:1, max: 50})
     .withMessage('Country is required within 20 characters'),
-  check('lat')
-    .exists({ checkFalsy: true })
+  check('lat').optional()
+    // .exists({ checkFalsy: true })
     .isFloat({ min: -90, max: 90 })
     .withMessage('Latitude must be within -90 and 90'),
-   check('lng')
-    .exists({ checkFalsy: true })
+   check('lng').optional()
+    // .exists({ checkFalsy: true })
     .isFloat({ min: -180, max: 180 })
     .withMessage('Longitude must be within -180 and 180'),
   check('name')
@@ -396,7 +396,7 @@ const checkUserExistence = async (req, res, next) => {
   const errors = {}
   for (let user of users) {
     if (email == user.email) {
-      errors.email = "Userwith that email already exists"
+      errors.email = "User with that email already exists"
     }
     if (username == user.username) {
       errors.username = "User with that username already exists"

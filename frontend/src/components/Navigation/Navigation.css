@@ -1,7 +1,30 @@
-.profile-dropdown {
-  position: absolute;
-}
-
 .hidden {
   display: none;
 }
+
+#navbar {
+  margin-bottom: 20px;
+  padding: 0px 4%;
+  padding-top: 20px;
+}
+
+#navbar h2 {
+  color: #ff690f;
+}
+
+#create-spot {
+  margin-right: 15px;
+  justify-content: center;
+  height: 45px;
+  width: 165px;
+  justify-content: center;
+  background-color: transparent;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: bolder;
+}
+
+#create-spot:hover {
+  background-color: #F0F3F5;
+}
+

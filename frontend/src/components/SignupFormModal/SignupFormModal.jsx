@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
@@ -14,100 +14,110 @@ function SignupFormModal() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  const [disable, setDisable] = useState(true);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors({});
-      return dispatch(
-        sessionActions.signup({
-          email,
-          username,
-          firstName,
-          lastName,
-          password
-        })
-      )
-        .then(closeModal)
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data?.errors) {
-            setErrors(data.errors);
-          }
-        });
+  useEffect(() => {
+    if(!email || !username || username.length<4 || !firstName || !lastName || !password || password<6 || !confirmPassword) {
+      setDisable(true);
+    } else {
+      setDisable(false);
     }
-    return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
-    });
+  }, [email, username, firstName, lastName, password, confirmPassword])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      return setErrors({
+        confirmPassword: "Confirm Password field must be the same as the Password field"
+      });
+    }
+
+    const data = await dispatch(
+      sessionActions.signup({
+        email,
+        username,
+        firstName,
+        lastName,
+        password
+      })
+    )
+
+    if (data?.errors) {
+      setErrors(data.errors);
+    } else {
+      closeModal();
+    }
+    
   };
 
   return (
-    <>
+    <div id="signup-container" className='login-signup-container'>
       <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
+      <form className="login-signup-form"  onSubmit={handleSubmit}>
         <label>
-          Email
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            placeholder='Email'
           />
         </label>
         {errors.email && <p>{errors.email}</p>}
         <label>
-          Username
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            placeholder='Username'
           />
         </label>
         {errors.username && <p>{errors.username}</p>}
         <label>
-          First Name
           <input
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
+            placeholder='First Name'
           />
         </label>
         {errors.firstName && <p>{errors.firstName}</p>}
         <label>
-          Last Name
           <input
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
+            placeholder='Last Name'
           />
         </label>
         {errors.lastName && <p>{errors.lastName}</p>}
         <label>
-          Password
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            placeholder='Password'
           />
         </label>
         {errors.password && <p>{errors.password}</p>}
         <label>
-          Confirm Password
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+            placeholder='Confirm Password'
           />
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        <button className="user-fuction-button" type="submit" disabled={disable}>Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 

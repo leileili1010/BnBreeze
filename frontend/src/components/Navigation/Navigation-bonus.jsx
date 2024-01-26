@@ -7,16 +7,22 @@ function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-      {isLoaded && (
-        <li>
-          <ProfileButton user={sessionUser} />
-        </li>
-      )}
-    </ul>
+    <div id="navbar" className='flex'>
+        <NavLink to="/"><h2>BnBreeze</h2></NavLink>
+
+        <div className='newspot-profile-container flex'>
+          { sessionUser && 
+            <div id="create-spot" className='flex' >
+              <NavLink to='/spots/new'>Create a New Spot</NavLink>
+            </div>
+          }
+          
+          {isLoaded && (
+            <ProfileButton user={sessionUser} />
+          )}
+        </div>
+
+    </div>
   );
 }
 

@@ -1,0 +1,11 @@
+.stars-review-container .filled {
+    color: black;
+}
+
+.star.filled i {
+    color: black;
+}
+
+.star.empty i {
+    color: burlywood;
+}

@@ -256,7 +256,7 @@ router.delete('/:spotId', [requireAuth, ifSpotExists, checkAuthorization], async
 })
 
 // Get all Reviews by a Spot's id
-router.get('/:spotId/reviews', [requireAuth, ifSpotExists], async(req, res) => {
+router.get('/:spotId/reviews', [ifSpotExists], async(req, res) => {
     const Reviews = await Review.findAll({
         where: {
             spotId: req.params.spotId

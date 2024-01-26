@@ -1,1 +1,66 @@
-/* TODO: Add sitewide styles */
+* {
+    font-family: "Neue Plak", Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    color: #222222;
+}
+
+li,
+ul {
+    list-style-type: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* body {
+    padding: 20px 4%;
+   
+} */
+
+a {
+    text-decoration: none;
+}
+
+a,
+a:visited,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: inherit; /* or any color you want to use */
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.grid {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+.form-container {
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color:white;
+    border-radius: 5%;
+    outline: 1px solid lightgray;
+}
+
+input:focus {
+    background-color: #F0F3F5;
+    border: none;
+    outline: none;
+}
