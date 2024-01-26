@@ -396,7 +396,7 @@ const checkUserExistence = async (req, res, next) => {
   const errors = {}
   for (let user of users) {
     if (email == user.email) {
-      errors.email = "Userwith that email already exists"
+      errors.email = "User with that email already exists"
     }
     if (username == user.username) {
       errors.username = "User with that username already exists"

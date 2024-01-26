@@ -1,0 +1,71 @@
+#user-profile-button {
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    height: 45px;
+    width: 80px;
+    padding: 8px 14px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 20px;
+    position: relative;
+}
+
+
+#user-profile-button:hover {
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+}
+
+#user-profile-button i {
+  font-size: 15px;
+} 
+
+#user-profile-button i:last-of-type {
+  font-size: 30px;
+  color:gray
+}
+
+.profile-dropdown-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 95px;
+    right: 4.3%;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px 0;
+    box-shadow: 1px 1px 4px 2px lightgray;
+    width: 200px;
+}
+
+.user-dropdown {
+    display: grid;
+    /* grid-row-gap: 25px; */
+    color: #222222;
+}
+
+.user-dropdown div {
+    padding: 12Px 
+}
+
+.user-dropdown .link:hover {
+    background-color: #F0F3F5;
+}
+
+.divider {
+    height: 1px;       
+    background-color: lightgray; 
+    width: 100%;   
+    margin: 10px 0px  
+}
+
+#user-greeting {
+    font-weight: bold;
+}
+
+
