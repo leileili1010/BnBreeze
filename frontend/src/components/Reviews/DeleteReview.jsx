@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { thunkDeleteReview } from '../../store/reviews';
 import { thunkGetSpot } from '../../store/spots';
+import './DeleteReview.css'
 
 const DeleteReview = ({review}) => {
     const { closeModal } = useModal();
@@ -15,7 +16,6 @@ const DeleteReview = ({review}) => {
             dispatch(thunkGetSpot(review.spotId));
             closeModal();
         }
-
     }
 
     return (

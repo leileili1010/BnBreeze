@@ -1,3 +1,42 @@
+#addspot-form-container {
+    max-width: 600px;
+    margin: auto;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+#addspot-form-container form h3 {
+    margin-bottom: 2px;
+}
+
+#addspot-form-container form h4 {
+    margin-bottom: 1em;
+    font-size: 0.9em;
+}
+
+
+
+.city-state {
+    display: flex;
+    gap: 10px;
+}
+
+.city-state label {
+    flex: 1;
+}
+
 .validationErrors {
-    color: red
+    color: red;
+    font-size: 0.8em;
+    margin-top: -0.5em;
+    margin-bottom: 1em;
+}
+
+#spot-submit {
+    width: 50%;
+    margin: 0px auto;
+    margin-top: 20px;
 }

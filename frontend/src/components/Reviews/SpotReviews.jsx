@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import OpenModalButton from '../OpenModalButton';
 import PostReview from './PostReview';
 import DeleteReview from './DeleteReview';
+import './SpotReviews.css';
 
 const SpotReviews = ({spot, reviewsArr}) => {
     const sessionUser = useSelector(state => state.session.user)
@@ -25,21 +26,24 @@ const SpotReviews = ({spot, reviewsArr}) => {
     
     return (
         <div className="spot-reviews-container">
-            <div className='rating-review-container'>
+            <div id="rating-review-container">
                 {
                     spot.avgStarRating !== "No ratings yet." ?
-                    (<span><i className="fa-solid fa-star"></i>{parseFloat(spot.avgStarRating).toFixed(1)}</span>) :
-                    (<span><i className="fa-solid fa-star"></i>New</span>)
+                    (<h3><i className="fa-solid fa-star"></i>{parseFloat(spot.avgStarRating).toFixed(1)}</h3>) :
+                    (<h3><i className="fa-solid fa-star"></i>New</h3>)
                 }
-                <span>{spot.numReviews !== "No reviews yet." ? (spot.numReviews > 1 ? ` · ${spot.numReviews} Reviews` : ` · ${spot.numReviews} Review`) : null}</span>
+                <h3 id="review-title">{spot.numReviews !== "No reviews yet." ? (spot.numReviews > 1 ? ` · ${spot.numReviews} Reviews` : ` · ${spot.numReviews} Review`) : null}</h3>
             </div>
 
             {ifPostReview && 
-                <OpenModalButton
-                    buttonText='Post Your Review'
-                    modalComponent={<PostReview spot={spot} sessionUser={sessionUser}/>}
-                />
+                <div id="postreview-button">
+                    <OpenModalButton
+                        buttonText='Post Your Review'
+                        modalComponent={<PostReview spot={spot} sessionUser={sessionUser}/>}
+                    />
+                </div>
             }
+
             {sessionUser && !hasReviews && !ifOwner && <h3>Be the first to post a review</h3> }
 
             {reviewsArr.length > 0 && 
@@ -50,10 +54,12 @@ const SpotReviews = ({spot, reviewsArr}) => {
                             <div>{new Date(review.updatedAt).toLocaleDateString('en-US', { month: 'long' })} {new Date(review.updatedAt).getFullYear()}</div>
                             <p>{review.review}</p>
                             {review.userId === sessionUser?.id && 
-                                <OpenModalButton 
+                                <div id='review-delete-button'>
+                                     <OpenModalButton 
                                     buttonText='Delete'
                                     modalComponent={<DeleteReview review={review} />}
-                                />
+                                    />
+                                </div>
                             }
                         </div>
                     ))}

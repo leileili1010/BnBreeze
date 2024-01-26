@@ -4,6 +4,7 @@ import { useModal } from '../../context/Modal';
 import StarReviewInput from "./StarReviewInput";
 import { thunkCreateReview } from "../../store/reviews";
 import { thunkGetSpot } from '../../store/spots';
+import './PostReview.css';
 
 const PostReview = ({spot, sessionUser}) => {
     const dispatch = useDispatch();
@@ -51,8 +52,9 @@ const PostReview = ({spot, sessionUser}) => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <h1>How was your stay?</h1>
+            <form id="addspot-form" className='form' onSubmit={handleSubmit}>
+                <h2>How was your stay at</h2>
+                <h2>{spot.name}?</h2>
                 {validationErrors.length && Object.values(validationErrors).map(error=>(
                     <p key="">{error}</p>
                 ))}

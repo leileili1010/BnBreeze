@@ -70,7 +70,6 @@ function LoginFormModal() {
                 id="username-input"
               />
             </label>
-            <span className='divider'></span>
             <label>
               <input
                 type="password"

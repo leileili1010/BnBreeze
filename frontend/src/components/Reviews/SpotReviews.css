@@ -1,0 +1,45 @@
+.spot-reviews-container {
+    display: grid;
+    max-width: 1140px; 
+  }
+
+  #rating-review-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+#review-title {
+    margin-left: 6px
+}
+
+#postreview-button {
+   margin-bottom: 10px;
+   font-size: 15px;
+}
+
+#review-delete-button {
+   margin-top: 10px;
+   margin-bottom: 5px
+}
+
+.spot-reveiws > div {
+    display: grid;
+    background-color: #f8f8f8;
+    border-radius: 4px; 
+    margin: 20px 0; 
+    padding: 5px; 
+}
+
+.spot-reveiws > div > div:first-child {
+    font-weight: bold;
+}
+
+.spot-reveiws p {
+    margin-top: 10px;
+    margin-bottom: 5px; 
+}
+
+.spot-reviews-container > h3 {
+    margin: 20px 0;
+}
+

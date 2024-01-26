@@ -7,7 +7,7 @@ const StarReviewInput = ({stars, onChange}) => {
     function starsReview(num) {
         return (
             <div className={`star ${activeRating >= num ? "filled" : "empty"}`}>
-                <i className="fa-solid fa-star" 
+                <i id="star" className="fa-solid fa-star" 
                 onMouseEnter={() => setActiveRating(num)} 
                 onMouseLeave={() => setActiveRating(stars) } 
                 onClick={() => onChange(num)} ></i>
