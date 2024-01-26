@@ -8,7 +8,6 @@ const EditSpot = () => {
     const dispatch = useDispatch();
     const {spotId} = useParams();
     const spot = useSelector(state => state.spots[spotId]);
-    console.log("🚀 ~ EditSpot ~ spot:", spot)
 
     useEffect(() => {
         dispatch(thunkGetSpot(spotId))

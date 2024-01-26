@@ -39,6 +39,7 @@ const CreateSpot = () => {
         e.preventDefault();
         let errors = {};
         if (!previewImage.length) errors.previewImage = "Preview image is required";
+
         if (previewImage && !previewImage.includes(".png") && !previewImage.includes(".jpg") && !previewImage.includes(".jpeg")) {
             errors.previewImage = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
         }
