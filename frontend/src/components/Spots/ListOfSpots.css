@@ -1,0 +1,87 @@
+#spots-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); 
+    gap: 30px;
+    padding: 4%;
+    margin: 0 auto;
+  }
+  
+  .spot {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .preview {
+    width: 100%;
+    padding-top: 100%; 
+    position: relative;
+  }
+  
+  .spotImg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4%;
+    
+  }
+  
+  .spot .address,
+  .spot .rating,
+  .spot .price {
+    padding: 8px 16px;
+    text-align: left;
+    font-size: 14px;
+  }
+
+  .spot .address,
+  .spot .price {
+    font-weight: bold;
+  }
+
+  .spot .price {
+    padding-right: 3px;
+  }
+  
+  .spot .night {
+    font-size: 14px;
+    padding: 8px 0px
+  }
+
+  .rating i {
+    margin-right: 3px
+  }
+ 
+  @media (max-width: 1880px) {
+    #spots-container {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+  
+  @media (max-width: 1640px) {
+    #spots-container {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  @media (max-width: 1130px) {
+    #spots-container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (max-width: 950px) {
+    #spots-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 550px) {
+    #spots-container {
+      grid-template-columns: 1fr; 
+    }
+  }
+  

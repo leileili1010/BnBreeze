@@ -41,6 +41,7 @@
     padding: 20px 0;
     box-shadow: 1px 1px 4px 2px lightgray;
     width: 200px;
+    z-index: 1;
 }
 
 .user-dropdown {
