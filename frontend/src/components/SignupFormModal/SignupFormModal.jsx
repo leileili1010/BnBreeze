@@ -17,7 +17,7 @@ function SignupFormModal() {
   const [disable, setDisable] = useState(true);
 
   useEffect(() => {
-    if(!email || !username || username.length<4 || !firstName || !lastName || !password || password<6 || !confirmPassword) {
+    if(!email || !username || username.length<4 || !firstName || !lastName || !password || password.length<6 || !confirmPassword) {
       setDisable(true);
     } else {
       setDisable(false);

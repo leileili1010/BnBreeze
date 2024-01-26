@@ -6,7 +6,6 @@ import { thunkCreateReview } from "../../store/reviews";
 import { thunkGetSpot } from '../../store/spots';
 
 const PostReview = ({spot, sessionUser}) => {
-    console.log("this is my spotID", spot.id)
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const [review, setReview] = useState('');

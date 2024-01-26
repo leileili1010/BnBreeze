@@ -5,7 +5,7 @@ import DeleteReview from './DeleteReview';
 
 const SpotReviews = ({spot, reviewsArr}) => {
     const sessionUser = useSelector(state => state.session.user)
-    const ifOwner = spot.Owner.id === sessionUser?.id;
+    const ifOwner = spot.Owner?.id === sessionUser?.id;
     const sortedReviews = reviewsArr.sort((a, b) => b.id - a.id);
     const hasReviews = reviewsArr.length > 0;
     let curUserReview = false;
@@ -20,6 +20,8 @@ const SpotReviews = ({spot, reviewsArr}) => {
     }
     
     const ifPostReview = sessionUser && !ifOwner &&(!hasReviews || !curUserReview);
+
+    if(!spot) return null; 
     
     return (
         <div className="spot-reviews-container">

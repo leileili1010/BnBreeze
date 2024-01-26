@@ -13,7 +13,6 @@ const ManageSpots = () => {
     const spots = useSelector(state => state.spots);
     const currentUserSpots = [];
     Object.values(spots).forEach(spot => {if(spot.ownerId === userId) currentUserSpots.push(spot)});
-    console.log("🚀 ~ ManageSpots ~ currentUserSpots:", currentUserSpots)
 
     useEffect(() => {
         dispatch(thunkGetSpots())

@@ -50,7 +50,6 @@ export const thunkGetSpots = () => async dispatch => {
         return spots;
     } else {
         const data = await res.json();
-        console.log("this is err", data); // to be delete!!!
         return data;
     }
 }
@@ -65,7 +64,6 @@ export const thunkGetSpot = (spotId) => async dispatch => {
     } 
     else {
         const data = await res.json();
-        // console.log("this is err", data); // to be delete!!!
         return data;
     }
 }
@@ -83,7 +81,6 @@ export const thunkCreateImage = (spotId, image) => async dispatch => {
         return createdImg;
     } else {
         const data = await res.json();
-        console.log("this is err for adding image", data); // to be delete!!!
         return data;
     }
 }

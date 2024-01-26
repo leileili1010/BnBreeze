@@ -87,7 +87,8 @@ const validateCreateSpot = [
     check('description')
     .exists({ checkFalsy: true })
     .notEmpty()
-    .withMessage('Description is required'),
+    .isLength({min: 30})
+    .withMessage('Description is required with at least 30 characters'),
   check('price')
     .exists({ checkFalsy: true })
     .notEmpty()

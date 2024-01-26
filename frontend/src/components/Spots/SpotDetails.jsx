@@ -20,12 +20,13 @@ const SpotDetails = () => {
         dispatch(thunkGetReviews(spotId));
     }, [dispatch, spotId, reviewsArr.length])
 
-    if (!spot || !spot.SpotImages) return null;
-
+    
     const handleReserve = () => {
         alert("Feature coming soon");
     }
-
+    
+    if (!spot || !spot.SpotImages) return null;
+    
     return (
         <div className='spot-details-contailer'>
             <h2>{spot.name}</h2>
@@ -44,7 +45,7 @@ const SpotDetails = () => {
                 </div>
             </div>
 
-            <h2>Hosted by {spot.Owner.firstName} {spot.Owner.lastName}</h2>
+            <h2>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</h2>
             <p>{spot.description}</p>
 
             <div className="reserve-container">
