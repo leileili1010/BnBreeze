@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { thunkGetSpot } from '../../store/spots';
 import SpotReviews from '../Reviews/SpotReviews';
 import { thunkGetReviews } from '../../store/reviews';
+import './SpotDetails.css';
 
 const SpotDetails = () => {
     const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const SpotDetails = () => {
     }
 
     return (
-        <div>
+        <div className='spot-details-contailer'>
             <h2>{spot.name}</h2>
             <h3>{spot.city}, {spot.state}, {spot.country}</h3>
 
