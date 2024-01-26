@@ -42,7 +42,7 @@ module.exports = {
         country: 'US',
         lat: 22.231,
         lng: 16.123,
-        name: "Secluded Home with Views of Skyline and Twin Peaks",
+        name: "Secluded Home with Views of Twin Peaks",
         description: "Discover a quiet, secluded retreat at the end of a small cul-de-sac on the north slope of Bernal Heights.",
         price: 374.0
       },
@@ -78,7 +78,7 @@ module.exports = {
         country: 'US',
         lat: 30.131,
         lng: 70.363,
-        name: "Modern Bungalow in Walkable North Park",
+        name: "Bungalow in Walkable North Park",
         description: "Originally constructed in 1921, this authentic craftsman has been restored keeping its original design elements intact including original ceiling beams, shaker doors, and redwood siding, while adding new modern elements and vintage finds.",
         price: 153.0
       },
