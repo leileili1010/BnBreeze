@@ -92,7 +92,7 @@ const validateCreateSpot = [
   check('price')
     .exists({ checkFalsy: true })
     .notEmpty()
-    .isFloat({ min: 0})
+    .isFloat({ min: 1})
     .withMessage('Price per day must be a positive number'),
   handleValidationErrors
 ]
