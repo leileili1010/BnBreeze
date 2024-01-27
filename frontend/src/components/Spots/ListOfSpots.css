@@ -4,12 +4,20 @@
     gap: 30px;
     padding: 4%;
     margin: 0 auto;
+    font-size: 1em;
   }
   
   .spot {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    font-size: 100px;
+  }
+
+  #spots-container .price,
+  #spots-container .night,
+  #spots-container .address{
+    font-size: 13px;
   }
   
   .preview {
@@ -59,6 +67,8 @@
     margin-bottom: 6px;
   }
 
+
+  /*manage spot */
   #update-delete {
     display: flex;
     justify-content: flex-end;
