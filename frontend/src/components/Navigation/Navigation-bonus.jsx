@@ -8,7 +8,7 @@ function Navigation({ isLoaded }) {
 
   return (
     <div id="navbar" className='flex'>
-        <NavLink to="/"><h2>BnBreeze</h2></NavLink>
+        <NavLink to="/"><h1>BnBreeze</h1></NavLink>
 
         <div className='newspot-profile-container flex'>
           { sessionUser && 
