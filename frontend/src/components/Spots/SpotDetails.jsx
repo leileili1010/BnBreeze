@@ -11,10 +11,12 @@ const SpotDetails = () => {
     const {spotId} = useParams();
     const spot = useSelector(state => state.spots[spotId]);
     const reviewsArr = Object.values(useSelector(state => state.reviews));
+    const spotImageArr = spot?.SpotImages
+
 
     useEffect(() => {
         dispatch(thunkGetSpot(spotId));
-    }, [dispatch, spotId])
+    }, [dispatch, spotId, spotImageArr?.length])
 
     useEffect(() => {
         dispatch(thunkGetReviews(spotId));
