@@ -3,10 +3,14 @@
     max-width: 1140px; 
   }
 
-  #rating-review-container {
+#rating-review-container {
     display: flex;
     justify-content: flex-start;
 }
+
+#rating-review-container .fa-star {
+    margin-right: 3px;
+  }
 
 #review-title {
     margin-left: 6px

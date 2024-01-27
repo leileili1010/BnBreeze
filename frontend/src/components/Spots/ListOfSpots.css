@@ -54,6 +54,20 @@
   .rating i {
     margin-right: 3px
   }
+
+  .price-night {
+    margin-bottom: 6px;
+  }
+
+  #update-delete {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+
+  .manage-spot h1 {
+    padding: 0 4%;
+  }
  
   @media (max-width: 1880px) {
     #spots-container {

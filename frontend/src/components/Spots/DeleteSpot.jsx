@@ -15,7 +15,7 @@ const DeleteSpot = ({spot}) => {
     }
 
     return (
-        <div className='delete-spot-modal'>
+        <div className='delete-modal-container'>
             <h1>Confirm Delete</h1>
             <p>Are you sure you want to remove this spot from the listings?</p>
             <button onClick={handleDelete}>Yes (Delete Spot)</button>
