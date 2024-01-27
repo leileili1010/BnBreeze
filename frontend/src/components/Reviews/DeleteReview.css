@@ -1,0 +1,32 @@
+.delete-modal-container {
+    background-color: #ffffff; 
+    width: 320px; 
+    padding: 20px; 
+    border-radius: 8px; 
+    text-align: center; 
+}
+
+.delete-modal-container h1 {
+    font-size: 1.5em; 
+    margin-bottom: 16px; 
+}
+
+.delete-modal-container p {
+    font-size: 1em; 
+    color: #666; 
+    margin-bottom: 24px; 
+}
+
+.delete-modal-container button {
+    font-size: 1em; 
+    padding: 10px 20px; 
+    border-radius: 4px; 
+    margin: 4px; 
+    width: calc(100% - 8px); 
+}
+
+.delete-modal-container button:last-of-type {
+    background-color: #6c757d;
+    color: white; 
+}
+

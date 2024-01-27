@@ -26,33 +26,44 @@ const ManageSpots = () => {
             </div>
         )
     } else return (
-        <div>
+        <div className='manage-spot'>
             <h1>Manage Your Spots</h1>
-            <div className='spots-container' >
-            {currentUserSpots.map(spot => (
-                <div className='spot' key={spot.id} title={spot.name}>
-                    <Link key={spot.id} to={`/spots/${spot.id}`}>
-                        <div className="preview">
-                            <img className="spotImg" src={spot.previewImage} alt="preview of spot" />
+            <div id='spots-container' >
+                {currentUserSpots.map(spot => (
+                    <div className='spot' key={spot.id} title={spot.name}>
+                        <Link key={spot.id} to={`/spots/${spot.id}`}>
+
+                            <div className="preview">
+                                <img className="spotImg" src={spot.previewImage} alt="preview of spot" />
+                            </div>
+
+                            <div className='address-rating flex'>
+                                <div className='address'>{`${spot.city}, ${spot.state}`}</div>
+                                <div className='rating'>
+                                    {
+                                        spot.avgRating !== "No ratings yet" ?
+                                            (<span><i className="fa-solid fa-star"></i>{parseFloat(spot.avgRating).toFixed(1)}</span>) :
+                                            (<span><i className="fa-solid fa-star"></i>New</span>)
+                                    }
+                                </div>
+                            </div>
+
+                            <div className='price-night'>
+                                <span className='price'>{`$${parseFloat(spot.price).toFixed(2)}`}</span>
+                                <span className='night'>night</span>
+                            </div>
+                        </Link>
+                        <div id='update-delete'>
+                            <button onClick={() => { navigate(`/spots/${spot.id}/edit`) }}>Update</button>
+                            <div id='delete'>
+                            <OpenModalButton  buttonText="Delete" modalComponent={<DeleteSpot spot={spot} />} />
+
+                            </div>
                         </div>
-                        <div className='address'>{`${spot.city}, ${spot.state}`}</div>
-                        <div className='rating'>
-                            {
-                                spot.avgRating !== "No ratings yet"?
-                                (<span><i className="fa-solid fa-star"></i>{parseFloat(spot.avgRating).toFixed(1)}</span>):
-                                (<span><i className="fa-solid fa-star"></i>New</span>)
-                            }
-                        </div>
-                        <div className='price'>{`$${parseFloat(spot.price).toFixed(2)} night`}</div>
-                    </Link>
-                    <div className='update-delete'>
-                            <button onClick={() => {navigate(`/spots/${spot.id}/edit`)}}>Update</button>
-                            <OpenModalButton buttonText="Delete" modalComponent={<DeleteSpot spot={spot}/>}/>
                     </div>
-                </div> 
-            ))}
-        </div>
-                
+                ))}
+            </div>
+
         </div>
     )
     

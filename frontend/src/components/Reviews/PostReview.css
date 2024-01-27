@@ -1,11 +1,60 @@
-.stars-review-container .filled {
-    color: black;
+.form {
+    max-width: 600px; 
+    min-width: 400px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px; 
+    text-align: center;
 }
 
-.star.filled i {
-    color: black;
+.form h2 {
+    margin-bottom: 0; 
+    display: inline; 
 }
 
-.star.empty i {
+.form textarea {
+    width: 100%;
+    height: 200px;
+    margin-top: 3em;
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    padding: 10px;
+    min-height: 100px; 
+    margin-bottom: 1em;
+    resize: none
+}
+
+.stars-review-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    margin-bottom: 1em;
+}
+
+.stars-review-container span {
+    margin-left: 10px; 
+    font-weight: bold;
+}
+
+.form button {
+    width: 55%; 
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.form p {
+    color: #D9534F; 
+    text-align: left;
+}
+
+#star {
+    font-size: 16px;
+}
+
+.empty #star {
     color: burlywood;
 }
+
+

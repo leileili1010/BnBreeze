@@ -28,9 +28,9 @@ const SpotDetails = () => {
     if (!spot || !spot.SpotImages) return null;
     
     return (
-        <div className='spot-details-contailer'>
+        <div className='spot-details-container'>
             <h2>{spot.name}</h2>
-            <h3>{spot.city}, {spot.state}, {spot.country}</h3>
+            <h4>{spot.city}, {spot.state}, {spot.country}</h4>
 
             <div className='images-container'>
                 <div className='large-img-container'>
@@ -44,23 +44,29 @@ const SpotDetails = () => {
                     ))}  
                 </div>
             </div>
-
-            <h2>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</h2>
-            <p>{spot.description}</p>
-
-            <div className="reserve-container">
-                <div className='price'>{`$${parseFloat(spot.price).toFixed(2)} night`}</div>
-                <div className='rating-review'>
-                    {
-                        spot.avgStarRating !== "No ratings yet."?
-                        (<span><i className="fa-solid fa-star"></i>{parseFloat(spot.avgStarRating).toFixed(1)}</span>):
-                        (<span><i className="fa-solid fa-star"></i>New</span>)  
-                    }
-                    <span>{spot.numReviews !== "No reviews yet."? (spot.numReviews>1? ` · ${spot.numReviews} Reviews`: ` · ${spot.numReviews} Review`): null}</span>
-                </div>
-                <button onClick={handleReserve}>Reserve</button>
-            </div>
             
+            <div id='detail-reserve'>
+                <div className='detail-container'>
+                    <h2>Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</h2>
+                    <p>{spot.description}</p>
+                </div>
+
+                <div className="reserve-container">
+                    <div className='price-reveiw-container flex'>
+                        <div className='price'>{`$${parseFloat(spot.price).toFixed(2)} night`}</div>
+                        <div className='rating-review'>
+                            {
+                                spot.avgStarRating !== "No ratings yet."?
+                                (<span><i className="fa-solid fa-star"></i>{parseFloat(spot.avgStarRating).toFixed(1)}</span>):
+                                (<span><i className="fa-solid fa-star"></i>New</span>)  
+                            }
+                            <span>{spot.numReviews !== "No reviews yet."? (spot.numReviews>1? ` · ${spot.numReviews} Reviews`: ` · ${spot.numReviews} Review`): null}</span>
+                        </div>
+                    </div>
+                    
+                    <button onClick={handleReserve}>Reserve</button>
+                </div>
+            </div>
             <SpotReviews spot={spot} reviewsArr={reviewsArr}/>
         </div>
     )

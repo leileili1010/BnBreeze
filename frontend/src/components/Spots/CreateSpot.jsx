@@ -107,9 +107,9 @@ const CreateSpot = () => {
     }
 
     return (
-        <div>
+        <div id="addspot-form-container">
             <h1>Create a New Spot</h1>
-            <form action="" onSubmit={handleSubmit}>
+            <form  action="" onSubmit={handleSubmit}>
                 <div className="location">
                     <h3>Where&apos;s your place located?</h3>
                     <h4>Guests will only get your exact address once they booked a reservation.</h4>
@@ -126,16 +126,21 @@ const CreateSpot = () => {
                     {validationErrors.address && <p className='validationErrors'>{validationErrors.address}</p>}
 
                     <div className="city-state">
-                        <label>
-                            City
-                            <input value={city} onChange={editCity} placeholder="City" type="text" />
-                        </label>
-                        {validationErrors.city && <p className='validationErrors'>{validationErrors.city}</p>}
-                        <label>
-                            State
-                            <input value={state} onChange={editState} placeholder="STATE" type="text" />
-                        </label>
-                        {validationErrors.state && <p className='validationErrors'>{validationErrors.state}</p>}
+                        <div>
+                            <label>
+                                City
+                                <input value={city} onChange={editCity} placeholder="City" type="text" />
+                            </label>
+                            {validationErrors.city && <p className='validationErrors'>{validationErrors.city}</p>}
+                        </div>
+                        
+                        <div>
+                            <label>
+                                State
+                                <input value={state} onChange={editState} placeholder="STATE" type="text" />
+                             </label>
+                            {validationErrors.state && <p className='validationErrors'>{validationErrors.state}</p>}
+                        </div>
                     </div>
                 </div>
 
@@ -174,7 +179,7 @@ const CreateSpot = () => {
                     <input value={image4} onChange={editImage4} placeholder="Image URL" type="URL" />
                     {validationErrors.image && <p className='validationErrors'>{validationErrors.image}</p>}
                 </div>
-                <button type="submit">Create Spot</button>
+                <button id="spot-submit" type="submit">Create Spot</button>
             </form>
         </div>
     )
