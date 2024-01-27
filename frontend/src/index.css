@@ -20,8 +20,6 @@ button {
     padding: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transition: background-color 0.2s; 
-    width: 60%;
-    margin: 0 auto;
 }
 
 button:hover {
@@ -57,6 +55,8 @@ a:active {
 button:disabled {
     cursor: not-allowed;
 }
+
+
 
 .form-container {
     margin: 0;
@@ -146,3 +146,4 @@ h4 {
 h1, h2, h3, h4 {
     color: #222222;
 }
+

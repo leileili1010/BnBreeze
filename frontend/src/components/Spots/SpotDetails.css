@@ -5,6 +5,11 @@
   padding: 1rem;
 }
 
+.spot-details-container h4 {
+  margin-top: 0;
+  margin-bottom: 37px;
+}
+
 .images-container {
   height: 460px;
   display: grid;

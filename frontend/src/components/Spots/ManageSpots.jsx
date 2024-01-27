@@ -20,14 +20,14 @@ const ManageSpots = () => {
 
     if (!currentUserSpots.length) {
         return (
-            <div>
-                <h1>Manage Your Spots</h1>
-                <button onClick={() => navigate('/spots/new')} >Create a new Spot</button>
+            <div className='manage-spot'>
+                <h2>Manage Your Spots</h2>
+                <button id='manage-spot-create-button' onClick={() => navigate('/spots/new')} >Create a new Spot</button>
             </div>
         )
     } else return (
-        <div className='manage-spot'>
-            <h1>Manage Your Spots</h1>
+        <div >
+            <h2 id="manage-spot-h1">Manage Your Spots</h2>
             <div id='spots-container' >
                 {currentUserSpots.map(spot => (
                     <div className='spot' key={spot.id} title={spot.name}>
@@ -54,10 +54,9 @@ const ManageSpots = () => {
                             </div>
                         </Link>
                         <div id='update-delete'>
-                            <button onClick={() => { navigate(`/spots/${spot.id}/edit`) }}>Update</button>
-                            <div id='delete'>
+                            <button id='review-delete-button' onClick={() => { navigate(`/spots/${spot.id}/edit`) }}>Update</button>
+                            <div id='review-delete-button'>
                             <OpenModalButton  buttonText="Delete" modalComponent={<DeleteSpot spot={spot} />} />
-
                             </div>
                         </div>
                     </div>

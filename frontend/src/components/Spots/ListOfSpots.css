@@ -67,8 +67,17 @@
     margin-bottom: 6px;
   }
 
+  /* manage spot */
+  .manage-spot {
+    padding: 0 4%;
+    margin-top: 15px;
+  }
+  #manage-spot-h1 {
+    padding: 0 4%;
+    margin-bottom: 0;
+    margin-top: 40px;
+  }
 
-  /*manage spot */
   #update-delete {
     display: flex;
     justify-content: flex-end;
@@ -77,6 +86,7 @@
 
   .manage-spot h1 {
     padding: 0 4%;
+    
   }
  
   @media (max-width: 1880px) {
