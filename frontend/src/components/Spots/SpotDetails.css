@@ -11,10 +11,12 @@
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
   margin-bottom: 1rem;
+  overflow: hidden;
 }
 
 .large-img-container,
 .small-img-container {
+  overflow: hidden;
   width: 100%;
   height: 100%;
 }
@@ -39,6 +41,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: 8px; 
+  overflow: hidden;
 }
 
 .spot-details-contailer h2,
