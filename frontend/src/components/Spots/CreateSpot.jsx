@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import { useNavigate, Navigate  } from 'react-router-dom';
 import { thunkCreateSpot } from '../../store/spots';
 import './CreateSpot.css';
 import { thunkCreateImage } from '../../store/spots';
 
 const CreateSpot = () => {
+    const navigate = useNavigate();
+    const sessionUser = useSelector(state=> state.session.user);
     const [country, setCountry] = useState("");
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
@@ -20,7 +22,6 @@ const CreateSpot = () => {
     const [image4, setImage4] = useState("");
     const [validationErrors, setValidationErrors] = useState({});
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const editCountry = (e) => setCountry(e.target.value);
     const editAddress = (e) => setAddress(e.target.value);
@@ -34,6 +35,13 @@ const CreateSpot = () => {
     const editImage2 = (e) => setImage2(e.target.value);
     const editImage3 = (e) => setImage3(e.target.value);
     const editImage4 = (e) => setImage4(e.target.value);
+
+    
+        if(!sessionUser) {
+            window.alert("Please log in first")
+            return <Navigate to='/' replace={true} />
+        }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();

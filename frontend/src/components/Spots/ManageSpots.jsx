@@ -1,22 +1,30 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import {thunkGetSpots} from '../../store/spots';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
 import DeleteSpot from './DeleteSpot';
 
 const ManageSpots = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const userId = useSelector(state => state.session.user.id);
+    const sessionUser = useSelector(state => state.session.user);
     const spots = useSelector(state => state.spots);
-    const currentUserSpots = [];
-    Object.values(spots).forEach(spot => {if(spot.ownerId === userId) currentUserSpots.push(spot)});
-
+   
     useEffect(() => {
         dispatch(thunkGetSpots())
     }, [dispatch])
+    
+    if(!sessionUser) {
+        window.alert("Please log in first")
+        return <Navigate to='/' replace={true} />
+    }
+
+    const userId = sessionUser?.id;
+    const currentUserSpots = [];
+    Object.values(spots).forEach(spot => {if(spot.ownerId === userId) currentUserSpots.push(spot)});
+
+    
 
     if (!currentUserSpots.length) {
         return (
