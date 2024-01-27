@@ -95,11 +95,13 @@ const CreateSpot = () => {
         ]
       
         const data = await dispatch(thunkCreateSpot(newSpot));        
-        if (data?.errors) {
+        if (data?.errors ) {
             errors = {...errors, ...data.errors}
             setValidationErrors(errors);
-        } else {
-            for (let image of newImages) {
+        } 
+        
+        if (!Object.keys(errors).length) {
+             for (let image of newImages) {
                 if(image) dispatch(thunkCreateImage(data.id, image));
             }
             navigate(`/spots/${data.id}`)
