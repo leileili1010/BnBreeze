@@ -20,6 +20,8 @@ button {
     padding: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transition: background-color 0.2s; 
+    width: 60%;
+    margin: 0 auto;
 }
 
 button:hover {
@@ -78,6 +80,7 @@ button:disabled {
 form {
     display: grid;
     max-width: 600px;
+    min-width: 280px;
     margin: auto;
     padding: 20px;
 }
@@ -93,6 +96,16 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
+textarea:focus {
+    background-color: #F0F3F5;
+    border: none;
+}
+
+textarea{
+    min-height: 180px;
+}
+
 
 input[type="password"],
 input[type="text"] {
@@ -129,10 +142,6 @@ h4 {
     font-size: 14px;
 }
 
-textarea:focus {
-    background-color: #F0F3F5;
-    border: none;
-}
 
 h1, h2, h3, h4 {
     color: #222222;
