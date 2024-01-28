@@ -41,6 +41,10 @@ function ProfileButton({ user }) {
     navigate('/');
   };
 
+  const alert = () => {
+    window.alert("Feature coming soon...")
+  }
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -55,8 +59,14 @@ function ProfileButton({ user }) {
             <div id="user-greeting">Hello, {user.firstName}!</div>
             <div>{user.username}</div>
             <div>{user.email}</div>
+            
             <span className="divider"></span>
+            
             <div className='link'><NavLink to='/spots/current' onClick={closeMenu}>Manage Spots</NavLink></div>
+            <div className='link'><NavLink onClick={alert}>Manage Review</NavLink></div>
+            
+            <span className="divider"></span>
+            
             <div className='link'>
               <NavLink onClick={logout}>Log Out</NavLink>
             </div>
