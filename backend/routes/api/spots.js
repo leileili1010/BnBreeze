@@ -53,7 +53,7 @@ router.get('/', validateQuery, async (req, res) => {
 
     // pagination
     page = page || 1;
-    size = size || 20;
+    size = size || 50;
     pagination.limit = size;
     pagination.offset = size * (page - 1);
 
