@@ -37,10 +37,18 @@ const SpotForm = ({spot}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         let errors = {};
+        if (!address || address.length > 50) errors.address = 'Street address is required within 50 characters';
+        if (!city || city.length > 20) errors.city = 'City is required within 20 characters';
+        if (!state || state.length > 20) errors.state = 'State is required within 20 characters';
+        if (!country || country.length > 20) errors.country = 'country is required within 20 characters';
+        if (!name || name.length > 50) errors.name = 'Name is required must be less than 50 characters';
+        if (!description || description.length < 30) errors.description = 'Description is required with at least 30 characters';
+        if (!price || price < 1) errors.price = 'Price per day must be a positive number';
         if (!previewImage.length) errors.previewImage = "Preview image is required";
         if (previewImage && !previewImage.includes(".png") && !previewImage.includes(".jpg") && !previewImage.includes(".jpeg")) {
             errors.previewImage = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
         }
+
         if (image1 && !image1.includes(".png") && !image1.includes(".jpg") && !image1.includes(".jpeg")) {
             errors.image1 = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
         }
@@ -84,17 +92,29 @@ const SpotForm = ({spot}) => {
         //     } : null
         // ]
        
-        const updatedSpot = await dispatch(thunkUpdateSpot(newSpot, spot.id));
-        
-        if(updatedSpot.errors) {
-            errors = {...errors, ...updatedSpot.errors};
-            setValidationErrors(errors);
-        } else {
-            // for (let image of newImages) {
-            //     if(image) dispatch(thunkCreateImage(spot.id, image));
-            // }
-            navigate(`/spots/${updatedSpot.id}`)
+        if(!Object.keys(errors).length) {
+            const updatedSpot = await dispatch(thunkUpdateSpot(newSpot, spot.id)); 
+            if(updatedSpot?.errors) {
+                errors = {...errors, ...updatedSpot.errors};
+                setValidationErrors(errors);
+            }
+            
+            if (!Object.keys(errors).length) {
+                navigate(`/spots/${updatedSpot.id}`)
+           }
         }
+
+        // const updatedSpot = await dispatch(thunkUpdateSpot(newSpot, spot.id));
+        
+        // if(updatedSpot?.errors) {
+        //     errors = {...errors, ...updatedSpot.errors};
+        //     setValidationErrors(errors);
+        // } else {
+        //     // for (let image of newImages) {
+        //     //     if(image) dispatch(thunkCreateImage(spot.id, image));
+        //     // }
+        //     navigate(`/spots/${updatedSpot.id}`)
+        // }
     }
 
     if(!spot || !spot.SpotImages) return null;
