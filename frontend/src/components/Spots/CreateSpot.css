@@ -2,6 +2,7 @@
     max-width: 600px;
     margin: auto;
     margin-bottom: 40px;
+    margin-top: 15px;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -17,15 +18,14 @@
     font-size: 0.9em;
 }
 
-
-
 .city-state {
     display: flex;
+    justify-content: space-between;
     gap: 10px;
 }
 
 .city-state label {
-    flex: 1;
+    flex: 1
 }
 
 .validationErrors {
@@ -39,4 +39,14 @@
     width: 50%;
     margin: 0px auto;
     margin-top: 20px;
+}
+
+#state, #city {
+    padding-right: 20px;
+}
+
+.location, .description, .title, .base-price{
+    padding-bottom: 3px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid darkgray;
 }

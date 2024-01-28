@@ -59,7 +59,6 @@ function LoginFormModal() {
         </div>
       }
       <form className="login-signup-form" onSubmit={handleSubmit}>
-        <div className='grid input-container'>
           <label>
               <input
                 type="text"
@@ -79,7 +78,6 @@ function LoginFormModal() {
                 required
               />
             </label>
-        </div>
         <button className="user-fuction-button" type="submit" disabled={disable}>Log In</button>
       </form>
       <button id="demouser" onClick={handleDemoUser}>Demo User</button>

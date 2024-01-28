@@ -55,27 +55,7 @@ function SignupFormModal() {
     <div id="signup-container" className='login-signup-container'>
       <h1>Sign Up</h1>
       <form className="login-signup-form"  onSubmit={handleSubmit}>
-        <label>
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            placeholder='Email'
-          />
-        </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            placeholder='Username'
-          />
-        </label>
-        {errors.username && <p>{errors.username}</p>}
-        <label>
+      <label>
           <input
             type="text"
             value={firstName}
@@ -84,7 +64,7 @@ function SignupFormModal() {
             placeholder='First Name'
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
+        {errors.firstName && <p className='validationErrors'>{errors.firstName}</p>}
         <label>
           <input
             type="text"
@@ -94,7 +74,27 @@ function SignupFormModal() {
             placeholder='Last Name'
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
+        {errors.lastName && <p className='validationErrors'>{errors.lastName}</p>}
+        <label>
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            placeholder='Email'
+          />
+        </label>
+        {errors.email && <p className='validationErrors'>{errors.email}</p>}
+        <label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            placeholder='Username'
+          />
+        </label>
+        {errors.username && <p className='validationErrors'>{errors.username}</p>}
         <label>
           <input
             type="password"
@@ -104,7 +104,7 @@ function SignupFormModal() {
             placeholder='Password'
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className='validationErrors'>{errors.password}</p>}
         <label>
           <input
             type="password"
@@ -114,7 +114,7 @@ function SignupFormModal() {
             placeholder='Confirm Password'
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        {errors.confirmPassword && <p className='validationErrors'>{errors.confirmPassword}</p>}
         <button className="user-fuction-button" type="submit" disabled={disable}>Sign Up</button>
       </form>
     </div>

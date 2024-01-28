@@ -19,7 +19,7 @@
   }
 
   .user-fuction-button {
-    margin-top: 20px;
+    margin-top: 15px;
   }
 
 .login-error i {
@@ -30,7 +30,7 @@
     border: none;
     box-shadow: none;
     background-color: transparent;
-    margin-top: 30px;
+    margin-top: 5px;
     text-decoration: underline;
     color: #222222;
 }
@@ -40,7 +40,4 @@
     outline: none;
 }
 
-.input-container .divider {
-    margin: 0px;
-}
 

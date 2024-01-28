@@ -44,16 +44,16 @@ const CreateSpot = () => {
             errors.previewImage = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
         }
         if (image1 && !image1.includes(".png") && !image1.includes(".jpg") && !image1.includes(".jpeg")) {
-            errors.image = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
+            errors.image1 = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
         }
         if (image2 && image2.includes(".png") && !image2.includes(".jpg") && !image2.includes(".jpeg")) {
-            errors.image = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
+            errors.image2 = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
         }
         if (image3 && !image3.includes(".png") && !image3.includes(".jpg") && !image3.includes(".jpeg")) {
-            errors.image = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
+            errors.image3 = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
         }
         if (image4 && !image4.includes(".png") && !image4.includes(".jpg") && !image4.includes(".jpeg")) {
-            errors.image = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
+            errors.image4 = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
         }
         setValidationErrors(errors);
 
@@ -129,7 +129,7 @@ const CreateSpot = () => {
                         <div>
                             <label>
                                 City
-                                <input value={city} onChange={editCity} placeholder="City" type="text" />
+                                <input id='city' value={city} onChange={editCity} placeholder="City" type="text" />
                             </label>
                             {validationErrors.city && <p className='validationErrors'>{validationErrors.city}</p>}
                         </div>
@@ -137,7 +137,7 @@ const CreateSpot = () => {
                         <div>
                             <label>
                                 State
-                                <input value={state} onChange={editState} placeholder="STATE" type="text" />
+                                <input id="state" value={state} onChange={editState} placeholder="STATE" type="text" />
                              </label>
                             {validationErrors.state && <p className='validationErrors'>{validationErrors.state}</p>}
                         </div>
@@ -171,13 +171,13 @@ const CreateSpot = () => {
                     <input value={previewImage} onChange={editPreviewImage} placeholder="Preview Image URL" type="URL" />
                     {validationErrors.previewImage && <p className='validationErrors'>{validationErrors.previewImage}</p>}
                     <input value={image1} onChange={editImage1} placeholder="Image URL" type="URL" />
-                    {validationErrors.image && <p className='validationErrors'>{validationErrors.image}</p>}
+                    {validationErrors.image1 && <p className='validationErrors'>{validationErrors.image1}</p>}
                     <input value={image2} onChange={editImage2} placeholder="Image URL" type="URL" />
-                    {validationErrors.image && <p className='validationErrors'>{validationErrors.image}</p>}
+                    {validationErrors.image2 && <p className='validationErrors'>{validationErrors.image2}</p>}
                     <input value={image3} onChange={editImage3} placeholder="Image URL" type="URL" />
-                    {validationErrors.image && <p className='validationErrors'>{validationErrors.image}</p>}
+                    {validationErrors.image3 && <p className='validationErrors'>{validationErrors.image3}</p>}
                     <input value={image4} onChange={editImage4} placeholder="Image URL" type="URL" />
-                    {validationErrors.image && <p className='validationErrors'>{validationErrors.image}</p>}
+                    {validationErrors.image4 && <p className='validationErrors'>{validationErrors.image4}</p>}
                 </div>
                 <button id="spot-submit" type="submit">Create Spot</button>
             </form>

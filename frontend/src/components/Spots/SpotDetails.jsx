@@ -55,7 +55,7 @@ const SpotDetails = () => {
 
                 <div className="reserve-container">
                     <div className='price-reveiw-container flex'>
-                        <div className='price'>{`$${parseFloat(spot.price).toFixed(2)} night`}</div>
+                        <div className='price'>{`$${parseFloat(spot.price).toFixed(2)} `}<span>night</span> </div>
                         <div className='rating-review'>
                             {
                                 spot.avgStarRating !== "No ratings yet."?

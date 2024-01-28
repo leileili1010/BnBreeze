@@ -17,7 +17,6 @@ const EditSpot = () => {
     
     return (
         <>
-            <h1>Update your Spot</h1>
             <SpotForm spot={spot} />
         </>
         
