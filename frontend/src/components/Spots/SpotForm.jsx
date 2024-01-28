@@ -44,7 +44,7 @@ const SpotForm = ({spot}) => {
         if (!name || name.length > 50) errors.name = 'Name is required must be less than 50 characters';
         if (!description || description.length < 30) errors.description = 'Description is required with at least 30 characters';
         if (!price || price < 1) errors.price = 'Price per day must be a positive number';
-        if (!previewImage.length) errors.previewImage = "Preview image is required";
+        if (!previewImage) errors.previewImage = "Preview image is required";
         if (previewImage && !previewImage.includes(".png") && !previewImage.includes(".jpg") && !previewImage.includes(".jpeg")) {
             errors.previewImage = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
         }
@@ -92,7 +92,7 @@ const SpotForm = ({spot}) => {
         //     } : null
         // ]
        
-        if(!Object.keys(errors).length) {
+        if(!Object.values(errors).length) {
             const updatedSpot = await dispatch(thunkUpdateSpot(newSpot, spot.id)); 
             if(updatedSpot?.errors) {
                 errors = {...errors, ...updatedSpot.errors};
