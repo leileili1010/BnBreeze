@@ -36,12 +36,15 @@ const CreateSpot = () => {
     const editImage3 = (e) => setImage3(e.target.value);
     const editImage4 = (e) => setImage4(e.target.value);
 
+    const validURL = (urlText) => {
+        const regex = new RegExp(/^(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._~#?&//=]+\.(png|jpg|jpeg))$/);
+         return regex.test(urlText);
+     }
     
         if(!sessionUser) {
             window.alert("Please log in first")
             return <Navigate to='/' replace={true} />
         }
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -53,23 +56,41 @@ const CreateSpot = () => {
         if (!name || name.length > 50) errors.name = 'Name is required must be less than 50 characters';
         if (!description || description.length < 30) errors.description = 'Description is required with at least 30 characters';
         if (!price || price < 1) errors.price = 'Price per day must be a positive number';
-        if (!previewImage) errors.previewImage = "Preview image is required";
-        if (previewImage && !previewImage.includes(".png") && !previewImage.includes(".jpg") && !previewImage.includes(".jpeg")) {
-            errors.previewImage = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
+        
+        if (!previewImage.trim().length || !validURL(previewImage.trim())) {
+            errors.previewImage = "Preview image is require in a format of .png or .jpg (or .jpeg)";
         }
-
-        if (image1 && !image1.includes(".png") && !image1.includes(".jpg") && !image1.includes(".jpeg")) {
+        
+        if(image1.trim().length && !validURL(image1.trim())) {
             errors.image1 = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
         }
-        if (image2 && image2.includes(".png") && !image2.includes(".jpg") && !image2.includes(".jpeg")) {
+        if(image2.trim().length && !validURL(image2.trim())) {
             errors.image2 = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
         }
-        if (image3 && !image3.includes(".png") && !image3.includes(".jpg") && !image3.includes(".jpeg")) {
+        if(image3.trim().length && !validURL(image3.trim())) {
             errors.image3 = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
         }
-        if (image4 && !image4.includes(".png") && !image4.includes(".jpg") && !image4.includes(".jpeg")) {
+        if(image4.trim().length && !validURL(image4.trim())) {
             errors.image4 = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
         }
+        
+        // if (!previewImage) errors.previewImage = "Preview image is required";
+        // if (previewImage && !previewImage.includes(".png") && !previewImage.includes(".jpg") && !previewImage.includes(".jpeg")) {
+        //     errors.previewImage = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
+        // }
+
+        // if (image1 && !image1.includes(".png") && !image1.includes(".jpg") && !image1.includes(".jpeg")) {
+        //     errors.image1 = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
+        // }
+        // if (image2 && image2.includes(".png") && !image2.includes(".jpg") && !image2.includes(".jpeg")) {
+        //     errors.image2 = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
+        // }
+        // if (image3 && !image3.includes(".png") && !image3.includes(".jpg") && !image3.includes(".jpeg")) {
+        //     errors.image3 = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
+        // }
+        // if (image4 && !image4.includes(".png") && !image4.includes(".jpg") && !image4.includes(".jpeg")) {
+        //     errors.image4 = "Image URL needs to in a format of .png or .jpg (or .jpeg)"
+        // }
         setValidationErrors(errors);
 
         const newSpot = {
@@ -189,15 +210,15 @@ const CreateSpot = () => {
                 <div className="spot-photos">
                     <h3>Liven up your spot with photos</h3>
                     <h4>Submit a link to at least one photo to publish your spot.</h4>
-                    <input value={previewImage} onChange={editPreviewImage} placeholder="Preview Image URL" type="URL" />
+                    <input value={previewImage} onChange={editPreviewImage} placeholder="Preview Image URL" type="text" />
                     {validationErrors.previewImage && <p className='validationErrors'>{validationErrors.previewImage}</p>}
-                    <input value={image1} onChange={editImage1} placeholder="Image URL" type="URL" />
+                    <input value={image1} onChange={editImage1} placeholder="Image URL" type="text" />
                     {validationErrors.image1 && <p className='validationErrors'>{validationErrors.image1}</p>}
-                    <input value={image2} onChange={editImage2} placeholder="Image URL" type="URL" />
+                    <input value={image2} onChange={editImage2} placeholder="Image URL" type="text" />
                     {validationErrors.image2 && <p className='validationErrors'>{validationErrors.image2}</p>}
-                    <input value={image3} onChange={editImage3} placeholder="Image URL" type="URL" />
+                    <input value={image3} onChange={editImage3} placeholder="Image URL" type="text" />
                     {validationErrors.image3 && <p className='validationErrors'>{validationErrors.image3}</p>}
-                    <input value={image4} onChange={editImage4} placeholder="Image URL" type="URL" />
+                    <input value={image4} onChange={editImage4} placeholder="Image URL" type="text" />
                     {validationErrors.image4 && <p className='validationErrors'>{validationErrors.image4}</p>}
                 </div>
                 <button id="spot-submit" type="submit">Create Spot</button>
