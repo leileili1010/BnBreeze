@@ -1,4 +1,27 @@
-# backend-project
+# BnBreeze
+
+### Link to live site:
+https://lei-auth-me.onrender.com/
+
+### Creator
+Fiona(Lei) Li [Github](https://github.com/leileili1010) | [LinkedIn](https://www.linkedin.com/in/leileili/)
+
+### Summary
+BnBreeze takes inspiration from Airbnb to create a platform where users can manage rental spots and discover new accommodations. Users can list their properties and manage spots. Guests can leave reviews and share their experiences. BnBreeze aims to provide a seamless and user-friendly experience for both hosts and guests, making it easy to find the perfect place to stay or manage rental properties with ease
+
+## Screenshots
+#### Home Page
+![image](https://github.com/leileili1010/BnBreeze/assets/143532361/92ebd955-5113-472c-99b2-6ca2f328964c)
+
+#### Spot Detail
+![image](https://github.com/leileili1010/BnBreeze/assets/143532361/888f2af5-5d07-454a-98e0-cd0c101f8c9b)
+
+#### Spot Review
+![image](https://github.com/leileili1010/BnBreeze/assets/143532361/1dfb85ef-b166-4f21-9b97-b3166658b054)
+
+#### Manage Spots
+![image](https://github.com/leileili1010/BnBreeze/assets/143532361/57b0e789-e583-44e5-8de6-4d6f61bbbd60)
+
 
 ## Database Schema Design
 
