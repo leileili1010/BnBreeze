@@ -31,6 +31,19 @@ BnBreeze takes inspiration from Airbnb to create a platform where users can mana
 
 [db-schema]:./images/db-schema.png
 
+## Get Started
+- In the backend directory, create a .env file
+- In the .env file initialize the following variables:
+  - PORT=8000
+  - DB_FILE=db/dev.db
+  - JWT_SECRET=<'Enter your secret here'>
+  - JWT_EXPIRES_IN=604800
+- Run npm install in both the frontend and backend directories
+- Run npm run dbreset in the backend directory to create a database and seed it
+- Run npm start in the backend directory to start the server
+- Run npm run dev in the frontend directory to start the server
+- Press "o" in the frontend terminal running the server to open the rendered webpage
+
 ## API Documentation
 
 ## USER AUTHENTICATION/AUTHORIZATION
