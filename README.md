@@ -22,13 +22,11 @@ BnBreeze takes inspiration from Airbnb to create a platform where users can mana
 #### Manage Spots
 ![image](https://github.com/leileili1010/BnBreeze/assets/143532361/57b0e789-e583-44e5-8de6-4d6f61bbbd60)
 
-
 ## Database Schema Design
 
 ![db-schema]
 
 [db-schema]:./images/db-schema.png
-
 
 ## API Documentation
 
