@@ -6,6 +6,9 @@ https://lei-auth-me.onrender.com/
 ### Creator
 Fiona(Lei) Li [Github](https://github.com/leileili1010) | [LinkedIn](https://www.linkedin.com/in/leileili/)
 
+### Let's Get Technical
+In this project I have used Javascript, Express，React, Redux, Sqlite, Sequelize, PostgreSQL, HTML5, CSS3, Render
+
 ### Summary
 BnBreeze takes inspiration from Airbnb to create a platform where users can manage rental spots and discover new accommodations. Users can list their properties and manage spots. Guests can leave reviews and share their experiences. BnBreeze aims to provide a seamless and user-friendly experience for both hosts and guests, making it easy to find the perfect place to stay or manage rental properties with ease
 
