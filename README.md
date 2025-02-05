@@ -4,7 +4,7 @@
 https://lei-auth-me.onrender.com/
 
 ### Creator
-Fiona(Lei) Li [Github](https://github.com/leileili1010) | [LinkedIn](https://www.linkedin.com/in/leileili/)
+Fiona(Lei) Li [Github](https://github.com/leileili1010)
 
 ### Let's Get Technical
 In this project I have used Javascript, Express，React, Redux, Sqlite, Sequelize, PostgreSQL, HTML5, CSS3, Render
